@@ -73,12 +73,14 @@
 		MemberID int NOT NULL,
 		PickupOdometer int NOT NULL,
 		DropoffOdometer int NOT NULL,
-		Status varchar (11) NOT NULL CHECK (Status = 'normal' OR Status = 'damaged' OR Status = 'not running'),
-		Date date NOT NULL,
-		primary key (VIN, MemberID, PickupOdometer, DropoffOdometer, Status, Date)
+        PickupStatus varchar (11) NOT NULL CHECK (Status = 'normal' OR Status = 'damaged' OR Status = 'not running'),
+		DropoffStatus varchar (11) NOT NULL CHECK (Status = 'normal' OR Status = 'damaged' OR Status = 'not running'),
+        PickupDate DATETIME NOT NULL,
+		DropoffDate DATETIME NOT NULL,
+		primary key (VIN, MemberID, PickupOdometer, DropoffOdometer, PickupStatus, DropoffStatus, PickupDate, DropoffDate)
 	);");
 	echo "* Car_Rental_History created *<br>";
-	
+                 
 	
 	mysqli_query($cxn,"create table Car_Maintenance_History
 	(
@@ -177,11 +179,12 @@
 	;");
 	echo "* Car values inserted *<br>";
 	
-	mysqli_query($cxn, "insert into Car_Rental_History values
-		('20140294', '20', '30000', '32500', 'normal', '2014-01-30'),
-		('20140295', '24', '28000', '90000', 'damaged', '2015-02-30'),
-		('20140296', '32', '0', '100000', 'not running', '2016-01-19')
-	;");
+    mysqli_query($cxn, "insert into Car_Rental_History values
+        ('20140294', '20', '124234', '3211231', 'normal', 'normal', '2017-03-16 10:00:00', '2017-03-29 18:00:00'),
+        ('20140295', '24', '234134', '3211231', 'normal', 'damaged', '2017-03-12 10:00:00', '2017-03-29 16:00:00'),
+        ('20140296', '32', '12321', '20000', 'normal', 'not running', '2017-02-12 10:00:00', '2017-02-15 18:00:00')
+        ;");
+
 	echo "* Car_Rental_History values inserted *<br>";
 	
 	mysqli_query($cxn, "insert into Car_Maintenance_History values
