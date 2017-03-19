@@ -173,7 +173,8 @@
 	mysqli_query($cxn, "insert into Car values
 		('20140294', 'Toyota', 'Corolla', '2014', '86', 'Green', 'welovetoyota.com/2018', '30.2'),			
 		('20140295', 'Porsche', 'Cayenne', '2014', '24', 'Blue', 'porsche.com/2017', '42.4'),			
-		('20140296', 'Tesla', 'Model 3', '2017', '92', 'Red', 'tesla.com/model3', '20.00')			
+		('20140296', 'Tesla', 'Model 3', '2017', '92', 'Red', 'tesla.com/model3', '20.00'),
+		('20140297', 'Subaru', 'Outback', '2018', '86', 'Silver', 'subaru.com/outback', '34.00')
 	;");
 	echo "* Car values inserted *<br>";
 	

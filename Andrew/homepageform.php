@@ -16,12 +16,22 @@
 </div>
 
 <form action="homepagehandle.php" method="post">
-
-<!-- HOW DOES THIS WORK? -->
-<div class="form-group">
-<label for="LocationID">Location ID:</label>
-<input type="text" name="LocationID" class="form-control" placeholder="Must be numeric entry" id="LocationID">
-</div>
+	
+	<!-- To/From Date Form -->
+	From:
+    <input type="date" name="dateFrom" value="<?php echo date('Y-m-d'); ?>" />
+    <br/><br/>
+    To:
+    <input type="date" name="dateTo" value="<?php echo date('Y-m-d'); ?>" />
+	
+	<br/><br/>
+	
+	<!-- HOW DOES THIS WORK? -->
+	<!-- Location ID Form -->
+	<div class="form-group">
+	<label for="LocationID">Location ID:</label>
+	<input type="text" name="LocationID" class="form-control" placeholder="Must be numeric entry" id="LocationID">
+	</div>
 
 <!--
 <div class="form-group">
