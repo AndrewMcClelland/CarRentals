@@ -29,10 +29,10 @@
     }
 
 
-    $memberID = "20";
+    $memberID = "32";
     $VIN = "20140294";
-    $pickupOdo = $_POST["curOdoReading"];
-    $pickupStatus = $_POST["carStatus"];
+    $curOdo = $_POST["curOdoReading"];
+    $curStatus = $_POST["carStatus"];
     date_default_timezone_set('US/Eastern');
     $currentDate = date('Y-m-d H:i:s');
 
@@ -44,11 +44,11 @@
     $resultVal = mysqli_query($cxn, $sqlQuery);
     if (mysqli_num_rows($resultVal) > 0)
     {
-      echo "Row exists<br></br>";
+      //echo "Row exists<br></br>";
       // output data of each row
   		while($row = mysqli_fetch_assoc($resultVal))
       {
-  			echo "VIN: " . $row["VIN"].
+  			/*echo "VIN: " . $row["VIN"].
         "<br>MemberID: " . $row["MemberID"].
         "<br>Pickup Odometer: " . $row["PickupOdometer"].
         "<br>Pickup Status: " . $row["PickupStatus"].
@@ -56,35 +56,38 @@
         "<br>Dropoff Odometer: " . $row["DropoffOdometer"].
         "<br>Dropoff Status: " .$row["DropoffStatus"].
         "<br>Dropoff Date: " .$row["DropoffDate"].
-        "<br></br>";
+        "<br></br>";*/
         if($row["DropoffOdometer"] == 0 || $row["DropoffOdometer"] == NULL)
         {
-          echo "Fill up the drop off values";
+          //echo "Fill up the drop off values";
           $sqlQuery = "UPDATE Car_Rental_History
-                      SET `DropoffOdometer`=$pickupOdo
+                      SET `DropoffOdometer`=$curOdo, `DropoffStatus`='$curStatus', `DropoffDate`='$currentDate'
                       WHERE MemberID=$memberID and VIN=$VIN";
-          mysqli_query($cxn, $sqlQuery);
-        }
+          mysqli_query($cxn, $sqlQuery); ?>
+          <h4> You have successfully filled out the dropoff form!</h4>
+          <h4> Please place your keys in the compartment below</h4>
+        <?php }
         else
-        {
-          echo "Can't update dropoff values again - this can only be done once";
-          echo "<br></br>Please consult admin if you made an error in the form";
-        }
+        {?>
+          <h4>Can't update dropoff values again - this can only be done once</h4>
+          <h4>Please consult admin if you made an error in the form"</h4>
+        <?php }
   		}
     }
     else
     {
-      echo "Row does not exist - Creating object";
-      echo "Fill with pickup values";
+      // echo "Row does not exist - Creating object";
+      // echo "<br></br>Fill with pickup values";
       // Create the pickup object
       mysqli_query($cxn, "insert into Car_Rental_History values
-                 ('$VIN', '$memberID', '$pickupOdo', 'NULL', '$pickupStatus', 'NULL', '$currentDate', 'NULL')
+                 ('$VIN', '$memberID', '$curOdo', 'NULL', '$curStatus', 'NULL', '$currentDate', 'NULL')
                  ;");
-    }
     ?>
-    <!-- Need to ensure object is created before showing this -->
     <h4> Keys are now dispensing </h4>
     <h4>Please pickup them up below </h4>
+    <?php }
+    ?>
+
 
 
 </body>

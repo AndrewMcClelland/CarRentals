@@ -25,7 +25,7 @@
       }
 
 
-      $memberID = "20";
+      $memberID = "32";
       $VIN = "20140294";
 
       // Check to see if the object exists
@@ -36,11 +36,11 @@
       $resultVal = mysqli_query($cxn, $sqlQuery);
       if (mysqli_num_rows($resultVal) > 0)
       {
-        echo "Row exists<br></br>";
+        //echo "Row exists<br></br>";
         // output data of each row
     		while($row = mysqli_fetch_assoc($resultVal))
         {
-    			echo "VIN: " . $row["VIN"].
+    			/*echo "VIN: " . $row["VIN"].
           "<br>MemberID: " . $row["MemberID"].
           "<br>Pickup Odometer: " . $row["PickupOdometer"].
           "<br>Pickup Status: " . $row["PickupStatus"].
@@ -48,7 +48,7 @@
           "<br>Dropoff Odometer: " . $row["DropoffOdometer"].
           "<br>Dropoff Status: " .$row["DropoffStatus"].
           "<br>Dropoff Date: " .$row["DropoffDate"].
-          "<br></br>";
+          "<br></br>";*/
 
           // If object exists, assumed pickup values set - check to see if dropoff is set
           // echo "DROPOFF ODOMETER NOT SET";
@@ -75,6 +75,11 @@
             </form>
           <?php
           }
+          else
+          {?>
+            <h4>You have already completed this form and your rental</h4>
+            <h4>Hope you enjoyed the ride service!</h4>
+          <?php }
         }
       }
       else
