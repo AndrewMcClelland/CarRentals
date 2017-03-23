@@ -31,6 +31,38 @@
 	<label for="LocationID">Location ID:</label>
 	<input type="text" name="LocationID" class="form-control" placeholder="Must be numeric entry" id="LocationID">
 	</div>
+	
+	<!-- Dropdown table for KTCS Locations -->
+	<?php
+    
+    $host = "localhost";
+    $user = "root";
+    $password = "";
+    $database = "KTCS";
+    
+    $cxn = mysqli_connect($host,$user,$password, $database);
+	
+	if (mysqli_connect_errno()) {
+        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+        die();
+    }
+	
+    echo "<select service = 'service'>";
+    echo '<option value="">'.'Please Select Location'.'</option>';
+
+	$sql_location_dropdown = "	SELECT LocationID, AddressLine, PostalCode, Province, City, Country, Spaces
+													FROM Parking_Location";
+													
+	$location_dropdown_result = mysqli_query($cxn, $sql_location_dropdown);
+	
+    while($row = mysqli_fetch_array($location_dropdown_result)) {
+		echo '<option value="">' . $row["AddressLine"]. ", " . $row["PostalCode"]. ", " . $row["City"]. ", " . $row["Province"]. ", " . $row["Country"] . '</option>';
+     }
+
+    echo '</select>';
+	
+	mysqli_close($cxn);
+?>
 
 <button type="submit" class="btn btn-default">Submit</button>
 </form>
