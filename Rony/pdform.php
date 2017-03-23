@@ -25,7 +25,7 @@
       }
 
 
-      $memberID = "32";
+      $memberID = "38";
       $VIN = "20140294";
 
       // Check to see if the object exists
@@ -36,23 +36,9 @@
       $resultVal = mysqli_query($cxn, $sqlQuery);
       if (mysqli_num_rows($resultVal) > 0)
       {
-        //echo "Row exists<br></br>";
-        // output data of each row
     		while($row = mysqli_fetch_assoc($resultVal))
         {
-    			/*echo "VIN: " . $row["VIN"].
-          "<br>MemberID: " . $row["MemberID"].
-          "<br>Pickup Odometer: " . $row["PickupOdometer"].
-          "<br>Pickup Status: " . $row["PickupStatus"].
-          "<br>Pickup Date: " . $row["PickupDate"].
-          "<br>Dropoff Odometer: " . $row["DropoffOdometer"].
-          "<br>Dropoff Status: " .$row["DropoffStatus"].
-          "<br>Dropoff Date: " .$row["DropoffDate"].
-          "<br></br>";*/
-
           // If object exists, assumed pickup values set - check to see if dropoff is set
-          // echo "DROPOFF ODOMETER NOT SET";
-          //echo "<br></br>Show Dropoff Form, not Pickup Form";
           if($row["DropoffOdometer"] == 0 || $row["DropoffOdometer"] == NULL)
           { ?>
             <div class="container-fluid">
@@ -71,6 +57,17 @@
             <input type="text" class="form-control" placeholder="Enter car status" name="carStatus" id="carStat" >
             <span class="help-block">Status can either be Normal, Damaged or Repair</span>
             </div>
+
+            <div class="form-group">
+            <label for="ratingVal">Rating:</label>
+            <input type="text" name="ratingVar" class="form-control" placeholder="Must be numeric entry between 1-5" id="ratingVal">
+            </div>
+
+            <div class="form-group">
+            <label for="commentVal">Comment:</label>
+            <input type="text" name="commentVar" class="form-control" placeholder="Please enter any comments/concerns you may have about the rental" id="commentVal">
+            </div>
+
             <button type="submit" class="btn btn-default">Submit</button>
             </form>
           <?php

@@ -29,7 +29,7 @@
     }
 
 
-    $memberID = "32";
+    $memberID = "38";
     $VIN = "20140294";
     $curOdo = $_POST["curOdoReading"];
     $curStatus = $_POST["carStatus"];
@@ -44,26 +44,23 @@
     $resultVal = mysqli_query($cxn, $sqlQuery);
     if (mysqli_num_rows($resultVal) > 0)
     {
-      //echo "Row exists<br></br>";
-      // output data of each row
   		while($row = mysqli_fetch_assoc($resultVal))
       {
-  			/*echo "VIN: " . $row["VIN"].
-        "<br>MemberID: " . $row["MemberID"].
-        "<br>Pickup Odometer: " . $row["PickupOdometer"].
-        "<br>Pickup Status: " . $row["PickupStatus"].
-        "<br>Pickup Date: " . $row["PickupDate"].
-        "<br>Dropoff Odometer: " . $row["DropoffOdometer"].
-        "<br>Dropoff Status: " .$row["DropoffStatus"].
-        "<br>Dropoff Date: " .$row["DropoffDate"].
-        "<br></br>";*/
         if($row["DropoffOdometer"] == 0 || $row["DropoffOdometer"] == NULL)
         {
-          //echo "Fill up the drop off values";
           $sqlQuery = "UPDATE Car_Rental_History
                       SET `DropoffOdometer`=$curOdo, `DropoffStatus`='$curStatus', `DropoffDate`='$currentDate'
                       WHERE MemberID=$memberID and VIN=$VIN";
-          mysqli_query($cxn, $sqlQuery); ?>
+          mysqli_query($cxn, $sqlQuery);
+
+          // Now we need to create the rental comment object and tie it
+          $ratingVal = $_POST["ratingVar"];
+          $commentVal = $_POST["commentVar"];
+
+          mysqli_query($cxn, "insert into Rental_Comment values
+                     ('$VIN', '$memberID', '$ratingVal', '$commentVal', '$currentDate', 'NULL', 'NULL')
+                     ;");
+          ?>
           <h4> You have successfully filled out the dropoff form!</h4>
           <h4> Please place your keys in the compartment below</h4>
         <?php }
@@ -76,8 +73,6 @@
     }
     else
     {
-      // echo "Row does not exist - Creating object";
-      // echo "<br></br>Fill with pickup values";
       // Create the pickup object
       mysqli_query($cxn, "insert into Car_Rental_History values
                  ('$VIN', '$memberID', '$curOdo', 'NULL', '$curStatus', 'NULL', '$currentDate', 'NULL')
