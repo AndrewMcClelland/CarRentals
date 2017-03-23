@@ -35,29 +35,50 @@
 	
 	echo "Selected start date: " . $user_start_date . " Selected end date: " . $user_end_date . "<br><br>";	
 	
-	$sql_reservations = "	SELECT vin, startdate
+	/*
+	 $sql_cars = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
+							FROM car
+							WHERE car.locationid = $LocationIDInput";
+	*/
+	
+	// Query all cars that fit within the specified date restriction
+	$sql_reservations = "	SELECT vin
 									FROM Reservations
 									WHERE Reservations.startdate > date '$user_end_date'";
-									
-    $sql_cars = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
-						FROM car
-						WHERE car.locationid = $LocationIDInput";
+	
+	// Query all cars that match VIN from returned reservations query
+	$sql_cars_reservations = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
+											FROM car
+											WHERE car.locationid = $LocationIDInput and vin in ($sql_reservations)";
 						
-	$reservations_result = mysqli_query($cxn, $sql_reservations);
-	$cars_result = mysqli_query($cxn, $sql_cars);
-		
+	//$cars_result = mysqli_query($cxn, $sql_cars);
+	//$reservations_result = mysqli_query($cxn, $sql_reservations);
+	$cars_reservations_result = mysqli_query($cxn, $sql_cars_reservations);	
+	
+	/*
+	if (mysqli_num_rows($cars_result) > 0) {
+		// output data of each row
+		while($row = mysqli_fetch_assoc($cars_result)) {
+			echo "VIN: " . $row["vin"]. "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"].  "<br>LocationID: " . $row["locationid"].  "<br>Colour: " . $row["colour"].  "<br>Picture Link: " . $row["picturelink"].  "<br>Rental Fee: $" . $row["rentalfee"].   "<br><br>";
+		}
+	} else {
+		echo "0 car results<br><br>";
+	}
+	
 	if (mysqli_num_rows($reservations_result) > 0) {
 		// output data of each row
 		while($row = mysqli_fetch_assoc($reservations_result)) {
-			echo "VIN: " . $row["vin"].  "<br>Start date: " . $row["startdate"]. "<br><br>";
+			echo "VIN: " . $row["vin"]. "<br><br>";
 		}
 	} else {
 		echo "0 reservations results<br><br>";
 	}
+	*/
 	
-	if (mysqli_num_rows($cars_result) > 0) {
+	// Print out all the results from the car reservations query
+	if (mysqli_num_rows($cars_reservations_result) > 0) {
 		// output data of each row
-		while($row = mysqli_fetch_assoc($cars_result)) {
+		while($row = mysqli_fetch_assoc($cars_reservations_result)) {
 			echo "VIN: " . $row["vin"]. "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"].  "<br>LocationID: " . $row["locationid"].  "<br>Colour: " . $row["colour"].  "<br>Picture Link: " . $row["picturelink"].  "<br>Rental Fee: $" . $row["rentalfee"].   "<br><br>";
 		}
 	} else {

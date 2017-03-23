@@ -26,22 +26,20 @@
 	
 	<br/><br/>
 	
-	<!-- HOW DOES THIS WORK? -->
 	<!-- Location ID Form -->
 	<div class="form-group">
 	<label for="LocationID">Location ID:</label>
 	<input type="text" name="LocationID" class="form-control" placeholder="Must be numeric entry" id="LocationID">
 	</div>
 
-<!--
-<div class="form-group">
-<label for="carStat"> Car Status </label>
-<input type="text" class="form-control" name="carStatus" id="carStat" >
-<span class="help-block">Status can either be Normal, Damaged or Repair</span>
-</div>
--->
-
 <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+<br/><br/>
+
+<!-- View all locations button -->
+<form action="homepageQueryLocations.php" method="post">
+<button type="submit" class="btn btn-default">View All KTCS Locations</button>
 </form>
 
 </body>
