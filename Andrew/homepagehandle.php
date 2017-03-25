@@ -80,8 +80,17 @@
 	if (mysqli_num_rows($cars_reservations_result) > 0) {
 		// output data of each row
 		while($row = mysqli_fetch_assoc($cars_reservations_result)) {
-			echo "VIN: " . $row["vin"]. "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"].  "<br>LocationID: " . $row["locationid"].  "<br>Colour: " . $row["colour"].  "<br>Picture Link: " . $row["picturelink"].  "<br>Rental Fee: $" . $row["rentalfee"].   "<br><br>";
+			echo "VIN: " . $row["vin"]. "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"].  "<br>LocationID: " . $row["locationid"].  "<br>Colour: " . $row["colour"].  "<br>Picture Link: " . $row["picturelink"].  "<br>Rental Fee: $" . $row["rentalfee"];
 			
+?>
+			<form name="register_car" method="POST" action="reservationhandle.php">
+			<input value="<?php echo $row["vin"];?>" type="hidden" name="search">
+			<input type="submit"  value="Reserve Car">
+			</form>
+   
+ <?php
+			echo "<br><br>";
+
 		}
 	} else {
 		echo "0 car results<br><br>";
