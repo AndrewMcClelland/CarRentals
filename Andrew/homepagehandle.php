@@ -29,11 +29,12 @@
     }
     
 	// HOW DOES THIS WORK?
-    $LocationIDInput = $_POST["LocationID"];
+    $LocationIDInput = isset($_POST['location_dropdown']) ? $_POST['location_dropdown'] : false;
 	$user_start_date = date('Y-m-d', strtotime($_POST['dateFrom']));
 	$user_end_date = date('Y-m-d', strtotime($_POST['dateTo']));
 	
-	echo "Selected start date: " . $user_start_date . " Selected end date: " . $user_end_date . "<br><br>";	
+	//echo "Selected ID: " . $LocationIDInput;
+	//echo "Selected start date: " . $user_start_date . " Selected end date: " . $user_end_date . "<br><br>";	
 	
 	/*
 	 $sql_cars = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
@@ -80,6 +81,7 @@
 		// output data of each row
 		while($row = mysqli_fetch_assoc($cars_reservations_result)) {
 			echo "VIN: " . $row["vin"]. "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"].  "<br>LocationID: " . $row["locationid"].  "<br>Colour: " . $row["colour"].  "<br>Picture Link: " . $row["picturelink"].  "<br>Rental Fee: $" . $row["rentalfee"].   "<br><br>";
+			
 		}
 	} else {
 		echo "0 car results<br><br>";
