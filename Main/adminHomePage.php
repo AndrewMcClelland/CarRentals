@@ -107,7 +107,19 @@
     <option value="">Please select car...</option>
 	
 	<?php
-    
+		
+		$host = "localhost";
+		$user = "root";
+		$password = "";
+		$database = "KTCS";
+
+		$cxn = mysqli_connect($host,$user,$password, $database);
+
+		if (mysqli_connect_errno()) {
+		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		  die();
+		}
+		
 		$sql_cars_dropdown = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
 												FROM car";
 														
@@ -141,7 +153,19 @@
     <option value="">Please select location...</option>
 	
 	<?php
+		
+		$host = "localhost";
+		$user = "root";
+		$password = "";
+		$database = "KTCS";
 
+		$cxn = mysqli_connect($host,$user,$password, $database);
+
+		if (mysqli_connect_errno()) {
+		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		  die();
+		}
+		
 		$sql_location_dropdown = "	SELECT LocationID, AddressLine, PostalCode, Province, City, Country, Spaces
 														FROM Parking_Location";
 														
@@ -175,6 +199,99 @@
 	<button type="submit" class="btn btn-default">View Specified Cars</button>
 	
 </form>
+
+<br/><hr><br/>
+
+<!-- See cars with most/min rentals -->
+<h3>View Cars with Most/Minimum Rentals</h3>
+<p>Below are the cars with the highest/lowest number of rentals</p>
+	
+	<?php
+		
+		$host = "localhost";
+		$user = "root";
+		$password = "";
+		$database = "KTCS";
+
+		$cxn = mysqli_connect($host,$user,$password, $database);
+
+		if (mysqli_connect_errno()) {
+		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		  die();
+		}
+		
+		/*
+		$sql_rental_count = "	SELECT VIN, count(VIN) as Count_VIN
+											FROM Car_Rental_History
+											GROUP BY VIN";
+		*/
+		
+		// Count number of occurrences of each VIN, order in ascending, limit to 1 so top one is chosen (most occurrences)
+		$sql_max_count = "	SELECT VIN, COUNT(VIN) as Max_VIN
+											FROM Car_Rental_History
+											GROUP BY VIN
+											ORDER BY Max_VIN DESC
+											LIMIT 1";
+		
+		// Count number of occurrences of each VIN, order in descending, limit to 1 so top one is chosen (least occurrences)
+		$sql_min_count = "		SELECT VIN, COUNT(VIN) as Min_VIN
+											FROM Car_Rental_History
+											GROUP BY VIN
+											ORDER BY Min_VIN ASC
+											LIMIT 1";
+														
+		$max_count_result = mysqli_query($cxn, $sql_max_count);
+		$min_count_result = mysqli_query($cxn, $sql_min_count);
+		
+		?>
+		
+		<label><br/>Car with Most Rentals<br/></label>
+		<?php
+		
+		while($row = mysqli_fetch_array($max_count_result)) {
+			//echo "VIN = " . $row["VIN"] . " Count = " . $row["Count_VIN"] ."<br>";
+			$VIN_max = $row["VIN"];
+			echo " Occurrences = " . $row["Max_VIN"] ."<br>";
+		 }
+		 
+		 $sql_max_car = "SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
+									FROM car
+									WHERE car.vin = '$VIN_max'";
+		 
+		 $max_car_result = mysqli_query($cxn, $sql_max_car);
+
+		 while($row = mysqli_fetch_array($max_car_result)) {
+			echo "VIN: " . $row['vin'] . "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"]. "<br>Location ID: " . $row["locationid"] . "<br>Colour: " . $row["colour"] ."<br>Picture Link: " . $row["picturelink"] ."<br>Rental Fee: $" . $row["rentalfee"] .'</option>';
+		 }
+		 
+		 ?>
+		
+		<br><br>
+		
+		<label>Car with Least Rentals<br/></label>
+		<?php
+		 
+		 while($row = mysqli_fetch_array($min_count_result)) {
+			//echo "VIN = " . $row["VIN"] . " Count = " . $row["Count_VIN"] ."<br>";
+			$VIN_min = $row["VIN"];
+			echo " Occurrences = " . $row["Min_VIN"] ."<br>";
+		 }
+		
+		$sql_min_car = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
+									FROM car
+									WHERE car.vin = '$VIN_min'";
+														
+		$min_car_result = mysqli_query($cxn, $sql_min_car);
+		 
+		 while($row = mysqli_fetch_array($min_car_result)) {
+			echo "VIN: " . $row['vin'] . "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"]. "<br>Location ID: " . $row["locationid"] . "<br>Colour: " . $row["colour"] ."<br>Picture Link: " . $row["picturelink"] ."<br>Rental Fee: $" . $row["rentalfee"] .'</option>';
+		 }
+		
+		mysqli_close($cxn);
+	?>
+	
+<br/><hr><br/>
+
 
 </body>
 </html>
