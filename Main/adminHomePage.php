@@ -294,6 +294,7 @@
 
 <!-- See car rental history -->
 <h3>View Damaged/Need Repair Cars</h3>
+<p>Please complete the following form to view all rentals on the selected date:</p>
 <form action="damagedRepairCarsHandle.php" method="post">
 	
 	<br/><br/>
@@ -302,6 +303,24 @@
 	
 </form>
 
+<br/><hr><br/>
+
+<!-- See car rental history -->
+<h3>View Rental's On Given Day</h3>
+<form action="rentalsOnDayHandle.php" method="post">
+	
+	<br/><br/>
+	
+		<div class="form-group">
+        <label for="rentalDate"> Date: </label>
+        <input type="date" name="rentalDate" value="<?php echo date('Y-m-d'); ?>" />
+		</div>
+	
+	<br/>
+	
+	<button type="submit" class="btn btn-default">View Car Rentals</button>
+	
+</form>
 
 </body>
 </html>
