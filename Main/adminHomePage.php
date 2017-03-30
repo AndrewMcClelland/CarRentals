@@ -292,6 +292,16 @@
 	
 <br/><hr><br/>
 
+<!-- See car rental history -->
+<h3>View Damaged/Need Repair Cars</h3>
+<form action="damagedRepairCarsHandle.php" method="post">
+	
+	<br/><br/>
+	
+	<button type="submit" class="btn btn-default">View Damaged/Need Repair Cars</button>
+	
+</form>
+
 
 </body>
 </html>
