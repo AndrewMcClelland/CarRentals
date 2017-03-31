@@ -1,16 +1,17 @@
 <?php
    include('config.php');
-   session_start();
-   
-   $user_check = $_SESSION['login_user'];
-   
-   $ses_sql = mysqli_query($db,"select Email from KTCS_Member where Email = '$user_check' ");
-   
-   $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
-   
-   $login_session = $row['Email'];
-   
-   if(!isset($_SESSION['login_user'])){
-      header("location:login.php");
+   // Need to confirm if admin or user
+   if ($_SESSION["isAdmin"] == "FALSE")
+   {
+     if(!isset($_SESSION['login_user'])){
+        header("location:login.php");
+     }
+   }
+   else
+   {
+     // Is admin
+     if(!isset($_SESSION['adminCode'])){
+        header("location:login.php");
+     }
    }
 ?>

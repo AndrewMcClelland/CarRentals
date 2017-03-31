@@ -9,32 +9,41 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+  <?php
+    include('session.php');
+    ?>
+    <h4> Hi <?php echo $_SESSION["firstName"] ?></h4>
+    <!-- associate buton with it -->
+    <form name="logout" method="POST" action="logout.php">
+    <input value="btnLogout" type="hidden" name="Logout" >
+    <input type="submit"  value="Logout">
+    </form>
 
 <div class="container-fluid">
 <h1>Available KTCS Locations:</h1>
 </div>
 
 <?php
-    
+
     $host = "localhost";
     $user = "root";
     $password = "";
     $database = "KTCS";
-    
+
     $cxn = mysqli_connect($host,$user,$password, $database);
-    
+
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
         die();
     }
-    
-	
+
+
 	$sql_all_locations = "	SELECT LocationID, AddressLine, PostalCode, Province, City, Country, Spaces
 									FROM Parking_Location";
-									
-						
+
+
 	$locations_result = mysqli_query($cxn, $sql_all_locations);
-		
+
 	if (mysqli_num_rows($locations_result) > 0) {
 		// output data of each row
 		while($row = mysqli_fetch_assoc($locations_result)) {
@@ -43,7 +52,7 @@
 	} else {
 		echo "0 location results<br><br>";
 	}
-	
+
 	mysqli_close($cxn);
     ?>
 

@@ -11,6 +11,15 @@
 <body>
 
   <?php
+    include('session.php');
+    ?>
+    <h4> Hi <?php echo $_SESSION["firstName"] ?></h4>
+    <!-- associate buton with it -->
+    <form name="logout" method="POST" action="logout.php">
+    <input value="btnLogout" type="hidden" name="Logout" >
+    <input type="submit"  value="Logout">
+    </form>
+  <?php
 
       $host = "localhost";
       $user = "root";
@@ -25,7 +34,7 @@
       }
 
 
-      $memberID = "38";
+      $memberID = $_SESSION["memberID"];
       $VIN = "20140294";
 
       // Check to see if the object exists

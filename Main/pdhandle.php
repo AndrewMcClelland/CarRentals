@@ -15,7 +15,16 @@
 </div>
 
 <?php
+  include('session.php');
+  ?>
+  <h4> Hi <?php echo $_SESSION["firstName"] ?></h4>
+  <!-- associate buton with it -->
+  <form name="logout" method="POST" action="logout.php">
+  <input value="btnLogout" type="hidden" name="Logout" >
+  <input type="submit"  value="Logout">
+  </form>
 
+<?php
     $host = "localhost";
     $user = "root";
     $password = "";
@@ -29,7 +38,7 @@
     }
 
 
-    $memberID = "38";
+    $memberID = $_SESSION["memberID"];
     $VIN = "20140294";
     $curOdo = $_POST["curOdoReading"];
     $curStatus = $_POST["carStatus"];
@@ -74,8 +83,10 @@
     else
     {
       // Create the pickup object
+      echo "CREATE PICKUP";
+      echo $memberID;
       mysqli_query($cxn, "insert into Car_Rental_History values
-                 ('$VIN', '$memberID', '$curOdo', 'NULL', '$curStatus', 'NULL', '$currentDate', 'NULL')
+                 ('$VIN', '33', '$curOdo', 'NULL', '$curStatus', 'NULL', '$currentDate', 'NULL')
                  ;");
     ?>
     <h4> Keys are now dispensing </h4>

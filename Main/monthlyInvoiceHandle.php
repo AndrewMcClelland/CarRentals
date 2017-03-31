@@ -14,6 +14,16 @@
 </div>
 
 <?php
+  include('session.php');
+  ?>
+  <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
+  <!-- associate buton with it -->
+  <form name="logout" method="POST" action="logout.php">
+  <input value="btnLogout" type="hidden" name="Logout" >
+  <input type="submit"  value="Logout">
+  </form>
+
+<?php
 
     $host = "localhost";
     $user = "root";
