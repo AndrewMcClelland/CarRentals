@@ -10,6 +10,17 @@
 </head>
 <body>
 
+  <?php
+    include('session.php');
+    ?>
+    <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
+    <!-- associate buton with it -->
+    <form name="logout" method="POST" action="logout.php">
+    <input value="btnLogout" type="hidden" name="Logout" >
+    <input type="submit"  value="Logout">
+    </form>
+
+
 <div class="container-fluid">
 <h1>Admin Homepage</h1>
 </div>
@@ -89,9 +100,9 @@
 <h3>Add Car to Fleet  </h3>
 <p>Please click the button and complete the form on the following page to add a car to the fleet.</p>
 <form action="addCarForm.php" method="post">
-	
+
 	<button type="submit" class="btn btn-default">Add Car to Fleet</button>
-	
+
 </form>
 
 <br/><hr><br/>
@@ -100,14 +111,14 @@
 <h3>View Rental History for Cars</h3>
 <p>Please select a car to view the car's rental history.</p>
 <form action="carRentalHistoryHandle.php" method="post">
-	
+
 	<!-- Dropdown table for KTCS cars -->
 	<label for="Cars">Cars:</label>
 	<SELECT NAME = "car_dropdown">
     <option value="">Please select car...</option>
-	
+
 	<?php
-		
+
 		$host = "localhost";
 		$user = "root";
 		$password = "";
@@ -119,25 +130,25 @@
 		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		  die();
 		}
-		
+
 		$sql_cars_dropdown = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
 												FROM car";
-														
+
 		$car_dropdown_result = mysqli_query($cxn, $sql_cars_dropdown);
-		
+
 		while($row = mysqli_fetch_array($car_dropdown_result)) {
 			$row_ID = $row["vin"];
 			echo '<option value =' . $row_ID . '>' . $row["vin"]. ", " . $row["make"]. ", " . $row["model"]. ", " . $row["year"]. ", " . $row["locationid"] . ", " . $row["colour"] .", " . $row["picturelink"] .", " . $row["rentalfee"] .'</option>';
 		 }
-		
+
 		mysqli_close($cxn);
 	?>
-	
+
 	</SELECT>
 <br/><br/>
-	
+
 	<button type="submit" class="btn btn-default">View Car's Rental History</button>
-	
+
 </form>
 
 <br/><hr><br/>
@@ -151,9 +162,9 @@
 	<br/>
 	<SELECT NAME = "location_dropdown">
     <option value="">Please select location...</option>
-	
+
 	<?php
-		
+
 		$host = "localhost";
 		$user = "root";
 		$password = "";
@@ -165,18 +176,18 @@
 		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		  die();
 		}
-		
+
 		$sql_location_dropdown = "	SELECT LocationID, AddressLine, PostalCode, Province, City, Country, Spaces
 														FROM Parking_Location";
-														
+
 		$location_dropdown_result = mysqli_query($cxn, $sql_location_dropdown);
-		
+
 		while($row = mysqli_fetch_array($location_dropdown_result)) {
 			$row_ID = $row["LocationID"];
 			echo '<option value =' . $row_ID . '>' . $row["AddressLine"]. ", " . $row["PostalCode"]. ", " . $row["City"]. ", " . $row["Province"]. ", " . $row["Country"] . '</option>';
 		 }
 
-		
+
 		mysqli_close($cxn);
 	?>
 	</SELECT>
@@ -190,14 +201,14 @@
 <h3>Cars Since Maintenance</h3>
 <p>Enter a distance and view all cars that have travelled that distance since last maintenance.</p>
 <form action="carsDistanceSinceMaintenanceHandle.php" method="post">
-	
+
 	<div class="form-group">
 		<label for="DistanceSinceMaintenance">DOESN'T WORK RN<br/>Distance Since Last Maintenance:</label>
 		<input type="text" name="DistanceSinceMaintenance" class="form-control" placeholder="Must be numeric entry (km)..." id="DistanceSinceMaintenance">
 	</div>
-	
+
 	<button type="submit" class="btn btn-default">View Specified Cars</button>
-	
+
 </form>
 
 <br/><hr><br/>
@@ -205,9 +216,9 @@
 <!-- See cars with most/min rentals -->
 <h3>View Cars with Most/Minimum Rentals</h3>
 <p>Below are the cars with the highest/lowest number of rentals</p>
-	
+
 	<?php
-		
+
 		$host = "localhost";
 		$user = "root";
 		$password = "";
@@ -219,86 +230,86 @@
 		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		  die();
 		}
-		
+
 		/*
 		$sql_rental_count = "	SELECT VIN, count(VIN) as Count_VIN
 											FROM Car_Rental_History
 											GROUP BY VIN";
 		*/
-		
+
 		// Count number of occurrences of each VIN, order in ascending, limit to 1 so top one is chosen (most occurrences)
 		$sql_max_count = "	SELECT VIN, COUNT(VIN) as Max_VIN
 											FROM Car_Rental_History
 											GROUP BY VIN
 											ORDER BY Max_VIN DESC
 											LIMIT 1";
-		
+
 		// Count number of occurrences of each VIN, order in descending, limit to 1 so top one is chosen (least occurrences)
 		$sql_min_count = "		SELECT VIN, COUNT(VIN) as Min_VIN
 											FROM Car_Rental_History
 											GROUP BY VIN
 											ORDER BY Min_VIN ASC
 											LIMIT 1";
-														
+
 		$max_count_result = mysqli_query($cxn, $sql_max_count);
 		$min_count_result = mysqli_query($cxn, $sql_min_count);
-		
+
 		?>
-		
+
 		<label><br/>Car with Most Rentals<br/></label>
 		<?php
-		
+
 		while($row = mysqli_fetch_array($max_count_result)) {
 			//echo "VIN = " . $row["VIN"] . " Count = " . $row["Count_VIN"] ."<br>";
 			$VIN_max = $row["VIN"];
 			echo " Occurrences = " . $row["Max_VIN"] ."<br>";
 		 }
-		 
+
 		 $sql_max_car = "SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
 									FROM car
 									WHERE car.vin = '$VIN_max'";
-		 
+
 		 $max_car_result = mysqli_query($cxn, $sql_max_car);
 
 		 while($row = mysqli_fetch_array($max_car_result)) {
 			echo "VIN: " . $row['vin'] . "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"]. "<br>Location ID: " . $row["locationid"] . "<br>Colour: " . $row["colour"] ."<br>Picture Link: " . $row["picturelink"] ."<br>Rental Fee: $" . $row["rentalfee"] .'</option>';
 		 }
-		 
+
 		 ?>
-		
+
 		<br><br>
-		
+
 		<label>Car with Least Rentals<br/></label>
 		<?php
-		 
+
 		 while($row = mysqli_fetch_array($min_count_result)) {
 			//echo "VIN = " . $row["VIN"] . " Count = " . $row["Count_VIN"] ."<br>";
 			$VIN_min = $row["VIN"];
 			echo " Occurrences = " . $row["Min_VIN"] ."<br>";
 		 }
-		
+
 		$sql_min_car = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
 									FROM car
 									WHERE car.vin = '$VIN_min'";
-														
+
 		$min_car_result = mysqli_query($cxn, $sql_min_car);
-		 
+
 		 while($row = mysqli_fetch_array($min_car_result)) {
 			echo "VIN: " . $row['vin'] . "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"]. "<br>Location ID: " . $row["locationid"] . "<br>Colour: " . $row["colour"] ."<br>Picture Link: " . $row["picturelink"] ."<br>Rental Fee: $" . $row["rentalfee"] .'</option>';
 		 }
-		
+
 		mysqli_close($cxn);
 	?>
-	
+
 <br/><hr><br/>
 
 <!-- See car rental history -->
 <h3>View Damaged/Need Repair Cars</h3>
 <p>Please complete the following form to view all rentals on the selected date:</p>
 <form action="damagedRepairCarsHandle.php" method="post">
-	
+
 	<button type="submit" class="btn btn-default">View Damaged/Need Repair Cars</button>
-	
+
 </form>
 
 <br/><hr><br/>
@@ -306,18 +317,18 @@
 <!-- See car rental history -->
 <h3>View Rental's On Given Day</h3>
 <form action="rentalsOnDayHandle.php" method="post">
-	
+
 	<br/><br/>
-	
+
 		<div class="form-group">
         <label for="rentalDate"> Date: </label>
         <input type="date" name="rentalDate" value="<?php echo date('Y-m-d'); ?>" />
 		</div>
-	
+
 	<br/>
-	
+
 	<button type="submit" class="btn btn-default">View Car Rentals</button>
-	
+
 </form>
 
 </body>
