@@ -297,8 +297,6 @@
 <p>Please complete the following form to view all rentals on the selected date:</p>
 <form action="damagedRepairCarsHandle.php" method="post">
 	
-	<br/><br/>
-	
 	<button type="submit" class="btn btn-default">View Damaged/Need Repair Cars</button>
 	
 </form>

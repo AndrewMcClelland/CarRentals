@@ -1,6 +1,3 @@
-How do we check the most recent car rental history of a given car? (because that'll show the most recent dropoff odo)
-
-<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,11 +13,10 @@ How do we check the most recent car rental history of a given car? (because that
 <div class="container-fluid">
 <h1>Car Rental History</h1>
 </div>
--->
+
 
 <?php
     
-	/*
     $host = "localhost";
     $user = "root";
     $password = "";
@@ -35,34 +31,37 @@ How do we check the most recent car rental history of a given car? (because that
     
     $user_distance = isset($_POST['DistanceSinceMaintenance']) ? $_POST['DistanceSinceMaintenance'] : false;
 	
-	// Query all cars in maintenance table
-	$sql_maintenance = "	SELECT VIN, Odometer
-									FROM Car_Maintenance_History";
+	// Query all unique VIN in Car_Maintenance_History and return its highest Odometer value (its latest one)
+	$sql_maintenance_VIN_ODO = "	SELECT VIN, max(Odometer) as LatestMaintenanceODO
+													FROM Car_Maintenance_History
+													GROUP BY VIN";
 	
-	// Query all cars in rental history table
-	$sql_rental = "	SELECT VIN, DropoffOdometer
-							FROM Car_Rental_History";
+	// Query all unique VIN in Car_Rental_History and return its highest dropoff Odometer value (its latest one)
+	$sql_rental_VIN_ODO = "	SELECT VIN, max(DropoffOdometer) as LatestDropoffODO
+											FROM Car_Rental_History
+											GROUP BY VIN"; 
 	
 	$maintenance_result = mysqli_query($cxn, $sql_maintenance);
 	$rental_result = mysqli_query($cxn, $sql_rental);
 	
-	// Print out all the results from the queries that have > $user_distance since maintenance OR have > $user_distance and have had no maintenance
-	if (mysqli_num_rows($sql_rental) > 0) {
+	if (mysqli_num_rows($maintenance_result) > 0) {
 		// Loop through each car in the rental table
-		while($rental_row = mysqli_fetch_assoc($sql_rental)) {
+		while($row = mysqli_fetch_assoc($maintenance_result)) {
 			
-			$rental_dropoff_ODO = $rental_row["DropoffOdometer"];
-			$rental_VIN = $rental_row["VIN"];
-			
-			
-			while($maintenance_row = mysqli_fetch_assoc($maintenance_result)) {
-				
-			}
-			
-			echo "VIN: " . $row["VIN"]. "<br>MemberID: " . $row["MemberID"]. "<br>PickupOdometer: " . $row["PickupOdometer"]. "<br>DropoffOdometer: " . $row["DropoffOdometer"].  "<br>Date: " . $row["Date"].  "<br><br>";
+			echo "VIN: " . $row["VIN"]. "<br>Most Recent Maintenance Odometer: " . $row['LatestMaintenanceODO'] . "<br><br>";
 		}
 	} else {
-		echo "0 cars that travelled > $user_distance since last maintenance.<br><br>";
+		echo "No maintenance values.<br><br>";
+	}
+	
+	if (mysqli_num_rows($rental_result) > 0) {
+		// Loop through each car in the rental table
+		while($row = mysqli_fetch_assoc($rental_result)) {
+			
+			echo "VIN: " . $row["VIN"]. "<br>Most Recent Dropoff Odometer: " . $row['LatestDropoffODO'] . "<br><br>";
+		}
+	} else {
+		echo "No dropoff values.<br><br>";
 	}
 	
 	mysqli_close($cxn);
