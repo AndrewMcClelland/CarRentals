@@ -189,6 +189,7 @@
 
 	mysqli_query($cxn, "insert into Car_Maintenance_History values
 		('20140294', '1998-07-04', '84000', 'Scheduled', 'Scheduled mainenance for oil check.'),
+		('20140294', '1998-07-04', '95000', 'Scheduled', 'Scheduled mainenance for oil check.'),
 		('20140295', '2014-02-18', '68000', 'Repair', 'Repair the front bumper.'),
 		('20140296', '2012-12-20', '9000', 'Body Work', 'Putting on cool racing stripes.')
 	;");
