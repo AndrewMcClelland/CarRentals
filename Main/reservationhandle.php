@@ -10,10 +10,20 @@
 </head>
 <body>
 
+<?php
+    include('session.php');
+    ?>
+    <h4> Hi <?php echo $_SESSION["firstName"] ?></h4>
+    <!-- associate buton with it -->
+    <form name="logout" method="POST" action="logout.php">
+    <input value="btnLogout" type="hidden" name="Logout" >
+    <input type="submit"  value="Logout">
+    </form>
+
+
 <div class="container-fluid">
 <h1>Reserve Car</h1>
 </div>
-
 <?php
     
     $host = "localhost";
@@ -28,14 +38,40 @@
         die();
     }
 	
-	$reserved_car_VIN = $_POST["search"];
+	$reservation_ID = uniqid();
+	$Member_ID = $_SESSION["memberID"];
+	$row = $_SESSION["row_info"];
+	$reserved_car_VIN = $row["vin"];
+	$user_start_date = $_SESSION["start_date"];
+	$user_end_date = $_SESSION["end_date"];
+	$access_code = uniqid();
+	$test1 = strtotime($user_start_date);
+	$test2 = strtotime($user_end_date);
+	$datt = $test2 - $test1;
+	$numDays = floor($datt/(60 * 60 * 24));
 	
-	$reserved_car_SQL = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
-											FROM car
-											WHERE vin = $reserved_car_VIN";
-	$reserved_car_result = mysqli_query($cxn, $reserved_car_SQL);
-	$row = mysqli_fetch_assoc($reserved_car_result);
+	$amount = $numDays * floatval($row["rentalfee"]);
+	date_default_timezone_set('America/New_York');
+	$curr_date = date('Y-m-d');
+	$description = "You rented the " . " " . $row['year'] . " " . $row['make'] . " " . $row['model'] . " $" . $amount;
+		
+	$SQL_insert_reservation = "	INSERT INTO Reservations (ReservationID, MemberID, VIN, StartDate, EndDate, AccessCode)
+													VALUES ('$reservation_ID', '$Member_ID', '$reserved_car_VIN', '$user_start_date', '$user_end_date', '$access_code')";
 	
-	echo "Reserve:<br> Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"].  "<br>Colour: " . $row["colour"].  "<br>Picture Link: " . $row["picturelink"].  "<br>Rental Fee: $" . $row["rentalfee"];
+
+	$SQL_insert_payment = "	INSERT INTO Payment_history (MemberID, Amount, Date, Description)
+												VALUES ('$Member_ID', '$amount', '$curr_date', '$description')";
+												
+	if (mysqli_query($cxn, $SQL_insert_reservation)) {
+		echo "New reservation inserted successfully! Access code is: " . $access_code . "<br>";
+	} else {
+		echo "Error: " . $SQL_insert_reservation . "<br>" . mysqli_error($cxn);
+	}
+	
+	if (mysqli_query($cxn, $SQL_insert_payment)) {
+		echo "New payment object inserted successfully!";
+	} else {
+		echo "Error: " . $SQL_insert_payment . "<br>" . mysqli_error($cxn);
+	}
 	
 	?>

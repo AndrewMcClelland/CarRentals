@@ -52,15 +52,23 @@
 							WHERE car.locationid = $LocationIDInput";
 	*/
 
-	// Query all cars that fit within the specified date restriction
+	// Query all cars at location
+	$sql_all_cars_lcoation = " SELECT vin
+										  FROM car
+										  WHERE car.locationid = $LocationIDInput";
+	
+	// Query all cars that aren't valid
 	$sql_reservations = "	SELECT vin
 									FROM Reservations
-									WHERE Reservations.startdate > date '$user_end_date'";
+									WHERE (Reservations.startdate >= date '$user_start_date' AND Reservations.startdate <= date '$user_end_date' AND Reservations.enddate >= date '$user_start_date' AND Reservations.enddate >= date '$user_end_date') OR
+												(Reservations.startdate <= date '$user_start_date' AND Reservations.startdate <= date '$user_end_date' AND Reservations.enddate >= date '$user_start_date' AND Reservations.enddate >= date '$user_end_date') OR
+												(Reservations.startdate <= date '$user_start_date' AND Reservations.startdate <= date '$user_end_date' AND Reservations.enddate >= date '$user_start_date' AND Reservations.enddate <= date '$user_end_date') OR
+												(Reservations.startdate >= date '$user_start_date' AND Reservations.startdate <= date '$user_end_date' AND Reservations.enddate >= date '$user_start_date' AND Reservations.enddate <= date '$user_end_date')";
 
 	// Query all cars that match VIN from returned reservations query
 	$sql_cars_reservations = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
 											FROM car
-											WHERE car.locationid = $LocationIDInput and vin in ($sql_reservations)";
+											WHERE vin in ($sql_all_cars_lcoation) AND vin NOT IN ($sql_reservations)";
 
 	//$cars_result = mysqli_query($cxn, $sql_cars);
 	//$reservations_result = mysqli_query($cxn, $sql_reservations);
@@ -94,7 +102,7 @@
 
 ?>
 			<form name="register_car" method="POST" action="reservationhandle.php">
-			<input value="<?php echo $row["vin"];?>" type="hidden" name="search">
+			<input value="<?php $_SESSION["row_info"] = $row; $_SESSION["start_date"] = $user_start_date; $_SESSION["end_date"] = $user_end_date;?>" type="hidden" name="search">
 			<input type="submit"  value="Reserve Car">
 			</form>
 

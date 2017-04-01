@@ -128,12 +128,12 @@
 
 		mysqli_query($cxn,"create table Reservations
 	(
-		ReservationID int NOT NULL,
+		ReservationID varchar(20) NOT NULL,
 		MemberID int NOT NULL,
 		VIN int NOT NULL,
 		StartDate date NOT NULL,
 		EndDate date NOT NULL,
-		AccessCode int NOT NULL,
+		AccessCode varchar(20) NOT NULL,
 		primary key (ReservationID),
 		foreign key (VIN) references Car (VIN),
 		foreign key (MemberID) references KTCS_Member (MemberID)

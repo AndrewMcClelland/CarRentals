@@ -61,9 +61,14 @@
 			die();
 		}
 
-		//echo "<select service = 'service'>";
-		//echo "<select name=\"location_select\">";
-		//echo '<option value="">'.'Please Select Location'.'</option>';
+		// Drop reservation based on dates everytime it loads
+		date_default_timezone_set('America/New_York');
+		$curr_date = date('Y-m-d');
+		
+		$sql_delete_reservations = "	DELETE FROM Reservations
+														WHERE Reservations.EndDate < date '$curr_date'";
+		
+		mysqli_query($cxn, $sql_delete_reservations);
 
 		$sql_location_dropdown = "	SELECT LocationID, AddressLine, PostalCode, Province, City, Country, Spaces
 														FROM Parking_Location";
@@ -74,10 +79,6 @@
 			$row_ID = $row["LocationID"];
 			echo '<option value =' . $row_ID . '>' . $row["AddressLine"]. ", " . $row["PostalCode"]. ", " . $row["City"]. ", " . $row["Province"]. ", " . $row["Country"] . '</option>';
 		 }
-
-		//echo '</select>';
-		//$selected_option = $_POST['location_select'];
-		//echo $selected_option;
 
 		mysqli_close($cxn);
 	?>
@@ -91,6 +92,14 @@
 <!-- View all locations button -->
 <form action="homepageQueryLocations.php" method="post">
 <button type="submit" class="btn btn-default">View All KTCS Locations</button>
+</form>
+
+<br/><hr><br/>
+
+<!--  -->
+<h3>Access Your Reservations Pickup/Dropoff Form</h3>
+<form action="pdform.php" method="post">
+<button type="submit" class="btn btn-default">View Pickup/Dropoff Form</button>
 </form>
 
 </body>

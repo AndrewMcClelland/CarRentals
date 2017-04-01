@@ -39,7 +39,15 @@
           die();
       }
 
-
+	// Drop reservation based on dates everytime it loads
+	date_default_timezone_set('America/New_York');
+	$curr_date = date('Y-m-d');
+	
+	$sql_delete_reservations = "	DELETE FROM Reservations
+													WHERE Reservations.EndDate < date '$curr_date'";
+	
+	mysqli_query($cxn, $sql_delete_reservations);
+		
       //$memberID = "38";
       //$VIN = "20140294";
 
