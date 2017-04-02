@@ -19,6 +19,11 @@
     <input type="submit"  value="Logout">
     </form>
 
+    <form name="homepage" method="POST" action="goToUserHomepage.php">
+    <input value="btnHomepage" type="hidden" name="Back" >
+    <input type="submit"  value="Back">
+    </form>
+
 <div class="container-fluid">
 <h1>Available KTCS Locations:</h1>
 </div>

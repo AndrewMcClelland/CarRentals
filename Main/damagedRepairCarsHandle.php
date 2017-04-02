@@ -10,39 +10,54 @@
 </head>
 <body>
 
+  <?php
+    include('session.php');
+    ?>
+    <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
+    <!-- associate buton with it -->
+    <form name="logout" method="POST" action="logout.php">
+    <input value="btnLogout" type="hidden" name="Logout" >
+    <input type="submit"  value="Logout">
+    </form>
+
+    <form name="homepage" method="POST" action="goToAdminHomepage.php">
+    <input value="btnHomepage" type="hidden" name="Back" >
+    <input type="submit"  value="Back">
+    </form>
+
 <div class="container-fluid">
 <h1>Damaged/Need Repair Cars</h1>
 </div>
 
 <?php
-    
+
     $host = "localhost";
     $user = "root";
     $password = "";
     $database = "KTCS";
-    
+
     $cxn = mysqli_connect($host,$user,$password, $database);
-	    
+
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
         die();
     }
-	
+
 	// Return VIN of cars that were damaged or not running and haven't been maintenanced since
 	$sql_damageRepair_cars = "	SELECT VIN
 												FROM Car_Rental_History JOIN Car_Maintenance_History USING(VIN)
 												WHERE Car_Rental_History.Status IN ('damaged', 'not running') AND Car_Rental_History.Date > Car_Maintenance_History.Date";
-	
+
 	$sql_car_info = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
 								FROM car
 								WHERE car.vin IN ($sql_damageRepair_cars)";
-	
+
 	$car_info_result = mysqli_query($cxn, $sql_car_info);
-	
-	
+
+
 	while($row = mysqli_fetch_array($car_info_result)) {
 			//echo "VIN: " . $row['VIN'] . "<br>";
 			echo "VIN: " . $row['vin'] . "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"]. "<br>Location ID: " . $row["locationid"] . "<br>Colour: " . $row["colour"] ."<br>Picture Link: " . $row["picturelink"] ."<br>Rental Fee: $" . $row["rentalfee"] . "<br><br>";
 		 }
-	
+
 	?>

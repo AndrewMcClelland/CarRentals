@@ -10,6 +10,8 @@
 </head>
 <body>
 
+
+
 <div class="container-fluid">
 </div>
 
@@ -21,6 +23,11 @@
   <form name="logout" method="POST" action="logout.php">
   <input value="btnLogout" type="hidden" name="Logout" >
   <input type="submit"  value="Logout">
+  </form>
+
+  <form name="homepage" method="POST" action="goToAdminHomepage.php">
+  <input value="btnHomepage" type="hidden" name="Back" >
+  <input type="submit"  value="Back">
   </form>
 
 <?php
@@ -56,7 +63,7 @@
           <h5><b>Comment: </b><?php echo $row["Comment"] ?></h5>
           <h5><b>Date of Comment: </b><?php echo $row["Date"] ?></h5>
           <?php
-          if ($row["ReplyComment"] != NULL || $row["ReplyComment"] != "")
+          if ($row["ReplyComment"] != "")
           {
             ?>
             <h5><b>Replied Comment from Admin: </b><?php echo $row["ReplyComment"] ?></h5>

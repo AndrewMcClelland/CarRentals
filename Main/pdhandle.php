@@ -24,6 +24,11 @@
   <input type="submit"  value="Logout">
   </form>
 
+  <form name="homepage" method="POST" action="goToUserHomepage.php">
+  <input value="btnHomepage" type="hidden" name="Back" >
+  <input type="submit"  value="Back">
+  </form>
+
 <?php
     $host = "localhost";
     $user = "root";
@@ -39,7 +44,7 @@
 
 
     $memberID = $_SESSION["memberID"];
-    $VIN = "20140294";
+    $VIN = $_SESSION["currentVIN"];
     $curOdo = $_POST["curOdoReading"];
     $curStatus = $_POST["carStatus"];
     date_default_timezone_set('US/Eastern');
@@ -67,7 +72,7 @@
           $commentVal = $_POST["commentVar"];
 
           mysqli_query($cxn, "insert into Rental_Comment values
-                     ('$VIN', '$memberID', '$ratingVal', '$commentVal', '$currentDate', 'NULL', 'NULL')
+                     ('$VIN', '$memberID', '$ratingVal', '$commentVal', '$currentDate', '', 'NULL')
                      ;");
           ?>
           <h4> You have successfully filled out the dropoff form!</h4>
@@ -83,8 +88,6 @@
     else
     {
       // Create the pickup object
-      echo "CREATE PICKUP";
-      echo $memberID;
       mysqli_query($cxn, "insert into Car_Rental_History values
                  ('$VIN', '33', '$curOdo', 'NULL', '$curStatus', 'NULL', '$currentDate', 'NULL')
                  ;");

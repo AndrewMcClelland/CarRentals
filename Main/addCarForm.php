@@ -20,6 +20,11 @@
     <input type="submit"  value="Logout">
     </form>
 
+		<form name="homepage" method="POST" action="goToAdminHomepage.php">
+		<input value="btnHomepage" type="hidden" name="Back" >
+		<input type="submit"  value="Back">
+		</form>
+
 <div class="container-fluid">
 <h1>Add Car to Fleet</h1>
 <p>Please complete the following form to add a new car</p>

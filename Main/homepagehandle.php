@@ -20,6 +20,11 @@
     <input type="submit"  value="Logout">
     </form>
 
+    <form name="homepage" method="POST" action="goToUserHomepage.php">
+    <input value="btnHomepage" type="hidden" name="Back" >
+    <input type="submit"  value="Back">
+    </form>
+
 <div class="container-fluid">
 <h1>Thank you for submitting the form!</h1>
 </div>
@@ -56,7 +61,7 @@
 	$sql_all_cars_lcoation = " SELECT vin
 										  FROM car
 										  WHERE car.locationid = $LocationIDInput";
-	
+
 	// Query all cars that aren't valid
 	$sql_reservations = "	SELECT vin
 									FROM Reservations

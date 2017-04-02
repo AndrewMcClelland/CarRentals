@@ -20,24 +20,29 @@
     <input type="submit"  value="Logout">
     </form>
 
+    <form name="homepage" method="POST" action="goToUserHomepage.php">
+    <input value="btnHomepage" type="hidden" name="Back" >
+    <input type="submit"  value="Back">
+    </form>
+
 
 <div class="container-fluid">
 <h1>Reserve Car</h1>
 </div>
 <?php
-    
+
     $host = "localhost";
     $user = "root";
     $password = "";
     $database = "KTCS";
-    
+
     $cxn = mysqli_connect($host,$user,$password, $database);
-    
+
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
         die();
     }
-	
+
 	$reservation_ID = uniqid();
 	$Member_ID = $_SESSION["memberID"];
 	$row = $_SESSION["row_info"];
@@ -49,29 +54,29 @@
 	$test2 = strtotime($user_end_date);
 	$datt = $test2 - $test1;
 	$numDays = floor($datt/(60 * 60 * 24));
-	
+
 	$amount = $numDays * floatval($row["rentalfee"]);
 	date_default_timezone_set('America/New_York');
 	$curr_date = date('Y-m-d');
-	$description = "You rented the " . " " . $row['year'] . " " . $row['make'] . " " . $row['model'] . " $" . $amount;
-		
+	$description = "You rented the " . " " . $row['year'] . " " . $row['make'] . " " . $row['model'];
+
 	$SQL_insert_reservation = "	INSERT INTO Reservations (ReservationID, MemberID, VIN, StartDate, EndDate, AccessCode)
 													VALUES ('$reservation_ID', '$Member_ID', '$reserved_car_VIN', '$user_start_date', '$user_end_date', '$access_code')";
-	
+
 
 	$SQL_insert_payment = "	INSERT INTO Payment_history (MemberID, Amount, Date, Description)
 												VALUES ('$Member_ID', '$amount', '$curr_date', '$description')";
-												
+
 	if (mysqli_query($cxn, $SQL_insert_reservation)) {
 		echo "New reservation inserted successfully! Access code is: " . $access_code . "<br>";
 	} else {
 		echo "Error: " . $SQL_insert_reservation . "<br>" . mysqli_error($cxn);
 	}
-	
+
 	if (mysqli_query($cxn, $SQL_insert_payment)) {
 		echo "New payment object inserted successfully!";
 	} else {
 		echo "Error: " . $SQL_insert_payment . "<br>" . mysqli_error($cxn);
 	}
-	
+
 	?>
