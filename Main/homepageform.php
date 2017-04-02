@@ -102,5 +102,14 @@
 <button type="submit" class="btn btn-default">View Pickup/Dropoff Form</button>
 </form>
 
+
+<br/><hr><br/>
+
+<!--  -->
+<h3>View Information Regarding Past Car Rentals</h3>
+<form action="memberRentalHistory.php" method="post">
+<button type="submit" class="btn btn-default">View Car Rental History</button>
+</form>
+
 </body>
 </html>
