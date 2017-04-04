@@ -15,18 +15,9 @@
 
 <?php
   include('session.php');
+  include('navbaradmin.php');
   ?>
-  <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
-  <!-- associate buton with it -->
-  <form name="logout" method="POST" action="logout.php">
-  <input value="btnLogout" type="hidden" name="Logout" >
-  <input type="submit"  value="Logout">
-  </form>
 
-  <form name="homepage" method="POST" action="goToAdminHomepage.php">
-  <input value="btnHomepage" type="hidden" name="Back" >
-  <input type="submit"  value="Back">
-  </form>
 
 <?php
 
@@ -45,12 +36,14 @@
 
     $replyComment = $_POST["replyCommentVal"];
     $row = $_SESSION["curRow"];
+    echo $row["VIN"];
+    $curVin = $row["VIN"];
     date_default_timezone_set('America/New_York');
     $curDate = date('Y-m-d');
     $curMember = $row["MemberID"];
     // Now we insert this into the DB
 
-    $sqlQuery = "UPDATE `Rental_Comment` SET `ReplyComment`='$replyComment',`ReplyDate`='$curDate' WHERE `MemberID`=$curMember";
+    $sqlQuery = "UPDATE `Rental_Comment` SET `ReplyComment`='$replyComment',`ReplyDate`='$curDate' WHERE `MemberID`=$curMember and `VIN`=$curVin";
 
     $resultVal = mysqli_query($cxn, $sqlQuery);
     if ($resultVal == True)

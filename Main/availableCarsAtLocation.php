@@ -12,23 +12,14 @@
 
   <?php
     include('session.php');
+    include('navbaradmin.php');
     ?>
-    <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
-    <!-- associate buton with it -->
-    <form name="logout" method="POST" action="logout.php">
-    <input value="btnLogout" type="hidden" name="Logout" >
-    <input type="submit"  value="Logout">
-    </form>
 
-    <form name="homepage" method="POST" action="goToAdminHomepage.php">
-    <input value="btnHomepage" type="hidden" name="Back" >
-    <input type="submit"  value="Back">
-    </form>
 
 <div class="container-fluid">
 <h1>Available cars & reservations</h1>
-</div>
--->
+
+
 
 <?php
 
@@ -68,37 +59,19 @@
 	$sql_available_cars = "	SELECT *
 										FROM Car JOIN Reservations USING (VIN)
 										WHERE Car.VIN IN ($sql_cars_reservations)";
+	
+	// View all cars that are at the location but are not in the reservation table
+	$sql_all_car_reservations = "	SELECT VIN
+													FROM Reservations
+													WHERE StartDate > date '$curr_date'";
+	
+	$sql_cars_atLocation = "	SELECT *
+											FROM Car
+											WHERE car.locationid = $user_location AND Car.VIN NOT IN ($sql_all_car_reservations)";
 
 
-	//$cars_atLocation_result = mysqli_query($cxn, $sql_cars_atLocation);
-	//$cars_reservations_result = mysqli_query($cxn, $sql_cars_reservations);
 	$available_cars_result = mysqli_query($cxn, $sql_available_cars);
-
-	/*
-	echo "Cars at location:<br><br>";
-
-	// Print out all the cars at selected location
-	if (mysqli_num_rows($cars_atLocation_result) > 0) {
-		// output data of each row
-		while($row = mysqli_fetch_assoc($cars_atLocation_result)) {
-			echo "VIN: " . $row["VIN"] . "<br><br>";
-		}
-	} else {
-		echo "No cars at selected location.<br><br>";
-	}
-
-	echo "Reservations for cars at location:<br><br>";
-
-	// Print out all the reservations for cars at location
-	if (mysqli_num_rows($cars_reservations_result) > 0) {
-		// output data of each row
-		while($row = mysqli_fetch_assoc($cars_reservations_result)) {
-			echo "VIN: " . $row["VIN"]. "<br><br>";
-		}
-	} else {
-		echo "No reservations for cars at selected location.<br><br>";
-	}
-	*/
+	$cars_atLocation_withoutRentals_result = mysqli_query($cxn, $sql_cars_atLocation);
 
 	echo "Information for cars with reservations at location:<br><br>";
 
@@ -113,11 +86,24 @@
 			echo "ReservationID: " . $row["ReservationID"]. "<br>MemberID: " . $row["MemberID"]. "<br>VIN: " . $row["VIN"]. "<br>StartDate: " . $row["StartDate"].  "<br>EndDate: " . $row["EndDate"].  "<br>AccessCode: " . $row["AccessCode"] . "<br><br>";
 		}
 	} else {
-		echo "SHOULD NEVER REACH HERE IF SECOND QUERY HAD RESULTS<br>No information for cars with reservations at location.<br><br>";
+		echo "No information for cars with reservations at location.<br><br>";
+	}
+	
+	echo "Information for cars at location without reservations:<br><br>";
+
+	// Print out all the reservations for cars at location
+	if (mysqli_num_rows($cars_atLocation_withoutRentals_result) > 0) {
+		// output data of each row
+		while($row = mysqli_fetch_assoc($cars_atLocation_withoutRentals_result)) {
+			echo "<strong>Car Information:</strong><br>";
+			echo "VIN: " . $row["VIN"]. "<br>Make: " . $row["Make"]. "<br>Model: " . $row["Model"]. "<br>Year: " . $row["Year"].  "<br>LocationID: " . $row["LocationID"].  "<br>Colour: " . $row["Colour"].  "<br>Picture Link: " . $row["PictureLink"].  "<br>Rental Fee: $" . $row["RentalFee"] . "<br><br>";
+		}
+	} else {
+		echo "No information for cars without reservations at location.<br><br>";
 	}
 
 	mysqli_close($cxn);
     ?>
-
+</div>
 </body>
 </html>
