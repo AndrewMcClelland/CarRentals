@@ -67,6 +67,8 @@
 			$row_ID = $row["LocationID"];
 			echo '<option value =' . $row_ID . '>' . $row["AddressLine"]. ", " . $row["PostalCode"]. ", " . $row["City"]. ", " . $row["Province"]. ", " . $row["Country"] . '</option>';
 		 }
+		 
+		 echo '<option value = ALL>' . "All..." . '</option>';
 
 		mysqli_close($cxn);
 	?>

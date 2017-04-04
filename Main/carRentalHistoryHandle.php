@@ -46,7 +46,7 @@
     $user_vin = isset($_POST['car_dropdown']) ? $_POST['car_dropdown'] : false;
 
 	// Query all rental history for selected car
-	$sql_rental_history = "	SELECT VIN, MemberID, PickupOdometer, DropoffOdometer, Status, Date
+	$sql_rental_history = "	SELECT VIN, MemberID, PickupOdometer, DropoffOdometer, PickupStatus, DropoffStatus, PickupDate, DropoffDate
 										FROM Car_Rental_History
 										WHERE Car_Rental_History.VIN = $user_vin";
 
@@ -56,7 +56,7 @@
 	if (mysqli_num_rows($cars_rental_history_result) > 0) {
 		// output data of each row
 		while($row = mysqli_fetch_assoc($cars_rental_history_result)) {
-			echo "VIN: " . $row["VIN"]. "<br>MemberID: " . $row["MemberID"]. "<br>PickupOdometer: " . $row["PickupOdometer"]. "<br>DropoffOdometer: " . $row["DropoffOdometer"].  "<br>Date: " . $row["Date"].  "<br><br>";
+			echo "VIN: " . $row["VIN"]. "<br>MemberID: " . $row["MemberID"]. "<br>PickupOdometer: " . $row["PickupOdometer"]. "<br>DropoffOdometer: " . $row["DropoffOdometer"].  "<br>Pickup Status: " . $row["PickupStatus"].  "<br>Dropoff Status: " . $row["DropoffStatus"]. "<br>Pickup date: " . $row["PickupDate"]. "<br>Dropoff Date: " . $row["DropoffDate"]. "<br><br>";
 		}
 	} else {
 		echo "0 car car reservation results<br><br>";

@@ -48,7 +48,7 @@
 	// All reservations on the date
 	$sql_reservations = "	SELECT ReservationID, MemberID, VIN, StartDate, EndDate, AccessCode
 									FROM Reservations
-									WHERE date '$user_rental_date' > StartDate AND date '$user_rental_date' < EndDate";
+									WHERE date '$user_rental_date' >= StartDate AND date '$user_rental_date' <= EndDate";
 
 	$reservations_result = mysqli_query($cxn, $sql_reservations);
 

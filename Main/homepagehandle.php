@@ -37,20 +37,18 @@
     $LocationIDInput = isset($_POST['location_dropdown']) ? $_POST['location_dropdown'] : false;
 	$user_start_date = date('Y-m-d', strtotime($_POST['dateFrom']));
 	$user_end_date = date('Y-m-d', strtotime($_POST['dateTo']));
-
-	//echo "Selected ID: " . $LocationIDInput;
-	//echo "Selected start date: " . $user_start_date . " Selected end date: " . $user_end_date . "<br><br>";
-
-	/*
-	 $sql_cars = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
-							FROM car
-							WHERE car.locationid = $LocationIDInput";
-	*/
-
-	// Query all cars at location
+	
+	
+	if($LocationIDInput == "ALL") {
+		// Query all cars
+	$sql_all_cars_lcoation = " SELECT vin
+										  FROM car";
+	} else {
+		// Query all cars at location
 	$sql_all_cars_lcoation = " SELECT vin
 										  FROM car
 										  WHERE car.locationid = $LocationIDInput";
+	}
 
 	// Query all cars that aren't valid
 	$sql_reservations = "	SELECT vin
