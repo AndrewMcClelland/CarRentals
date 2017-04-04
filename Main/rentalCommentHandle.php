@@ -11,24 +11,14 @@
 <body>
 
 
-
-<div class="container-fluid">
-</div>
-
 <?php
   include('session.php');
+  include('navbaradmin.php');
   ?>
-  <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
-  <!-- associate buton with it -->
-  <form name="logout" method="POST" action="logout.php">
-  <input value="btnLogout" type="hidden" name="Logout" >
-  <input type="submit"  value="Logout">
-  </form>
-
-  <form name="homepage" method="POST" action="goToAdminHomepage.php">
-  <input value="btnHomepage" type="hidden" name="Back" >
-  <input type="submit"  value="Back">
-  </form>
+<div class="container-fluid" style="margin-left:20px;">
+<h1>User Comments</h1>
+</div>
+<div class="well" style="margin-left:50px; margin-right:800px;">
 
 <?php
 
@@ -74,7 +64,7 @@
           { ?>
             <form name="reply_comment" method="POST" action="rentalCommentObj.php">
             <input value="<?php echo $memberID; $_SESSION["curRow"] = $row;?>" type="hidden" name="replyCommentVal">
-            <input type="submit"  value="Reply To Comment">
+            <button type="submit" class="btn btn-primary">Reply to Comment</button>
             </form>
             <br></br>
           <?php }
@@ -89,6 +79,6 @@
     ?>
 
 
-
+</div>
 </body>
 </html>

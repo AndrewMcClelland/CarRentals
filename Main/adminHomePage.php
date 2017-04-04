@@ -65,11 +65,11 @@
       // print_r($memberIDArry);
       // print_r($nameFirstArray);
       ?>
-        <div class="container-fluid">
-        <h3>Monthly Inovice</h3>
+        <div class="container-fluid" style="margin-left:20px;">
+        <h3>Monthly Invoice</h3>
         <p>Please complete the following fields to obtain the monthly invoice of a given member</p>
         </div>
-
+        <div class="well" style="margin-left:50px; margin-right:800px;">
         <form action="monthlyInvoiceHandle.php" method="post">
         <div class="form-group">
         <label for="memberIDVal">Member ID:</label>
@@ -84,7 +84,6 @@
         </select>
         <!--<input type="text" name="memID" class="form-control" placeholder="Must be numeric entry" id="memberIDVal">-->
         </div>
-
         <div class="form-group">
         <label for="monthStat"> Start Invoice Month: </label>
         <input type="date" name="monthStat" value="<?php echo date('Y-m-d'); ?>" />
@@ -95,30 +94,42 @@
         <input type="date" name="endMonthStat" value="<?php echo date('Y-m-d'); ?>" />
         </div>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</div>
 
-<br/><hr><br/>
+<br/><hr>
+
+
+
+
 
 <!-- Add a car -->
-<h3>Add Car to Fleet  </h3>
-<p>Please click the button and complete the form on the following page to add a car to the fleet.</p>
-<form action="addCarForm.php" method="post">
-
-	<button type="submit" class="btn btn-default">Add Car to Fleet</button>
-
+<div class="container-fluid" style="margin-left:20px;">
+	<h3 >Add Car to Fleet  </h3>
+	<p >Please click the button and complete the form on the following page to add a car to the fleet.</p>
+</div>
+<form action="addCarForm.php" method="post" style="margin-left:50px;">
+	<button type="submit" class="btn btn-primary">Add Car to Fleet</button>
 </form>
 
-<br/><hr><br/>
+<br/><hr>
+
+
+
+
+
 
 <!-- See car rental history -->
-<h3>View Rental History for Cars</h3>
-<p>Please select a car to view the car's rental history.</p>
+<div class="container-fluid" style="margin-left:20px;">
+	<h3>View Rental History for Cars</h3>
+	<p>Please select a car to view the car's rental history.</p>
+</div>
+<div class="well" style="margin-left:50px; margin-right:800px;">
 <form action="carRentalHistoryHandle.php" method="post">
-
 	<!-- Dropdown table for KTCS cars -->
 	<label for="Cars">Cars:</label>
-	<SELECT NAME = "car_dropdown">
+	<SELECT class="form-control" id="dopdownMember" NAME = "car_dropdown">
     <option value="">Please select car...</option>
 
 	<?php
@@ -149,22 +160,30 @@
 	?>
 
 	</SELECT>
-<br/><br/>
+<br/>
 
-	<button type="submit" class="btn btn-default">View Car's Rental History</button>
+	<button type="submit" class="btn btn-primary">View Car's Rental History</button>
 
 </form>
+</div>
+<br/><hr>
 
-<br/><hr><br/>
 
+
+
+
+<div class="container-fluid" style="margin-left:20px;">
 <h3>Available Cars at Location</h3>
  <p>View available cars at given location and reservations for each car (if any):</p>
+ </div>
+<div class="well" style="margin-left:50px; margin-right:800px;">
 <form action="availableCarsAtLocation.php" method="post">
 
 	<!-- Dropdown table for KTCS Locations to show available cars -->
 	<label for="LocationID"></label>
-	<br/>
-	<SELECT NAME = "location_dropdown">
+
+	<label for="Location:">Location:</label>
+	<SELECT class="form-control" id="dopdownMember" NAME = "location_dropdown">
     <option value="">Please select location...</option>
 
 	<?php
@@ -195,32 +214,43 @@
 		mysqli_close($cxn);
 	?>
 	</SELECT>
-
-	<button type="submit" class="btn btn-default">Submit</button>
+	<br/>
+	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</div>
+<br/><hr>
 
-<br/><hr><br/>
+
+
+
+
 
 <!--View cars that travelled > distance since last maintenance -->
+<div class="container-fluid" style="margin-left:20px;">
 <h3>Cars Since Maintenance</h3>
 <p>Enter a distance and view all cars that have travelled that distance since last maintenance.</p>
+</div>
+<div class="well" style="margin-left:50px; margin-right:800px;">
 <form action="carsDistanceSinceMaintenanceHandle.php" method="post">
 
 	<div class="form-group">
-		<label for="DistanceSinceMaintenance">DOESN'T WORK RN<br/>Distance Since Last Maintenance:</label>
+		<label for="DistanceSinceMaintenance">Distance Since Last Maintenance:</label>
 		<input type="text" name="DistanceSinceMaintenance" class="form-control" placeholder="Must be numeric entry (km)..." id="DistanceSinceMaintenance">
 	</div>
 
-	<button type="submit" class="btn btn-default">View Specified Cars</button>
+	<button type="submit" class="btn btn-primary">View Specified Cars</button>
 
 </form>
+</div>
 
-<br/><hr><br/>
+<br/><hr>
 
 <!-- See cars with most/min rentals -->
+<div class="container-fluid" style="margin-left:20px;">
 <h3>View Cars with Most/Minimum Rentals</h3>
 <p>Below are the cars with the highest/lowest number of rentals</p>
-
+</div>
+<div class="well" style="margin-left:50px; margin-right:800px;">
 	<?php
 
 		$host = "localhost";
@@ -260,7 +290,7 @@
 
 		?>
 
-		<label><br/>Car with Most Rentals<br/></label>
+		<p><br/>Car with Most Rentals<br/></p>
 		<?php
 
 		while($row = mysqli_fetch_array($max_count_result)) {
@@ -283,7 +313,7 @@
 
 		<br><br>
 
-		<label>Car with Least Rentals<br/></label>
+		<p>Car with Least Rentals<br/></p>
 		<?php
 
 		 while($row = mysqli_fetch_array($min_count_result)) {
@@ -304,25 +334,43 @@
 
 		mysqli_close($cxn);
 	?>
+</div>
+<br/><hr>
 
-<br/><hr><br/>
 
-<!-- See car rental history -->
+
+
+
+
+<!-- Damaged -->
+<div class="container-fluid" style="margin-left:20px;">
 <h3>View Damaged/Need Repair Cars</h3>
 <p>Please complete the following form to view all rentals on the selected date:</p>
-<form action="damagedRepairCarsHandle.php" method="post">
+</div>
 
-	<button type="submit" class="btn btn-default">View Damaged/Need Repair Cars</button>
+<form action="damagedRepairCarsHandle.php" method="post" style="margin-left:50px;">
+
+	<button type="submit" class="btn btn-primary">View Damaged/Need Repair Cars</button>
 
 </form>
 
-<br/><hr><br/>
+<br/><hr>
+
+
+
+
+
 
 <!-- See car rental history -->
+
+
+<div class="container-fluid" style="margin-left:20px;">
 <h3>View Rental's On Given Day</h3>
+<p>Please complete the following form to view all rentals on the selected date:</p>
+</div>
+<div class="well" style="margin-left:50px; margin-right:800px;">
 <form action="rentalsOnDayHandle.php" method="post">
 
-	<br/><br/>
 
 		<div class="form-group">
         <label for="rentalDate"> Date: </label>
@@ -331,11 +379,11 @@
 
 	<br/>
 
-	<button type="submit" class="btn btn-default">View Car Rentals</button>
+	<button type="submit" class="btn btn-primary">View Car Rentals</button>
 
 </form>
-
-<br/><hr><br/>
+</div>
+<br/><hr>
 
     <?php
     //echo $_SESSION['login_user'];
@@ -374,11 +422,11 @@
       // print_r($memberIDArry);
       // print_r($nameFirstArray);
       ?>
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-left:20px;">
         <h3>View Rental Comments</h3>
         <p>Please select the member to see if they have left any comments on a rental</p>
         </div>
-
+        <div class="well" style="margin-left:50px; margin-right:800px;">
         <form action="rentalCommentHandle.php" method="post">
         <div class="form-group">
         <label for="memberIDVal">Member:</label>
@@ -393,9 +441,9 @@
         </select>
         </div>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-		
+	</div>
 	<br>
 
 </body>

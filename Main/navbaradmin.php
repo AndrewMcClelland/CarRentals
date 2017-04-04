@@ -14,10 +14,7 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav">
-        <li><a href="adminHomePage.php">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="addCarForm.php">Add Car</a></li>
-        <li><a href="carRentalHistoryHandle.php">Rental History</a></li>
-        <li><a href="availableCarsAtLocation.php">Available Cars</a></li>
+        <li><a href="adminHomePage.php"><b>Home</b><span class="sr-only">(current)</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         	<li><a href="logout.php">Logout</a></li>

@@ -12,23 +12,14 @@
 
   <?php
     include('session.php');
+    include('navbaradmin.php');
     ?>
-    <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
-    <!-- associate buton with it -->
-    <form name="logout" method="POST" action="logout.php">
-    <input value="btnLogout" type="hidden" name="Logout" >
-    <input type="submit"  value="Logout">
-    </form>
 
-    <form name="homepage" method="POST" action="goToAdminHomepage.php">
-    <input value="btnHomepage" type="hidden" name="Back" >
-    <input type="submit"  value="Back">
-    </form>
 
 <div class="container-fluid">
 <h1>Available cars & reservations</h1>
-</div>
--->
+
+
 
 <?php
 
@@ -118,6 +109,6 @@
 
 	mysqli_close($cxn);
     ?>
-
+</div>
 </body>
 </html>

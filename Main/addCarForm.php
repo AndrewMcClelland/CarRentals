@@ -12,24 +12,15 @@
 
 	<?php
     include('session.php');
+    include('navbaradmin.php');
     ?>
-    <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
-    <!-- associate buton with it -->
-    <form name="logout" method="POST" action="logout.php">
-    <input value="btnLogout" type="hidden" name="Logout" >
-    <input type="submit"  value="Logout">
-    </form>
 
-		<form name="homepage" method="POST" action="goToAdminHomepage.php">
-		<input value="btnHomepage" type="hidden" name="Back" >
-		<input type="submit"  value="Back">
-		</form>
 
-<div class="container-fluid">
+<div class="container-fluid" style="margin-left:20px;">
 <h1>Add Car to Fleet</h1>
 <p>Please complete the following form to add a new car</p>
 </div>
-
+<div class="well" style="margin-left:50px; margin-right:800px;">
 <form action="addCarHandle.php" method="post">
 
 	<!-- Input forms for Car info -->
@@ -57,7 +48,7 @@
 
 		<label for="Location">Pickup/Dropoff Location:</label>
 		<!-- Dropdown table for KTCS Locations -->
-			<SELECT NAME = "location_dropdown">
+			<SELECT class="form-control" id="dopdownMember" NAME = "location_dropdown">
 			<option value="">Please select location...</option>
 
 			<?php
@@ -88,16 +79,6 @@
 			?>
 			</SELECT>
 
-		<!-- Checkbox to add new location -->
-		<!--
-		<form action="checkbox-form.php" method="post">
-			Add new location?
-			<input type="checkbox" name="formNewLocation" value="Yes" />
-			<input type="submit" name="formNewLocationSubmit" value="Submit" />
-		</form>
-		-->
-
-		<br/>
 		<br/>
 
 		<label for="Colour">Colour:</label>
@@ -120,7 +101,7 @@
 	<button type="submit" class="btn btn-default">Submit</button>
 
 </form>
-
+</div>
 <br/><br/>
 
 </body>
