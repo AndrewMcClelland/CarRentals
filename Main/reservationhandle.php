@@ -14,7 +14,7 @@
     include('session.php');
     include('navbar.php');
     ?>
-    
+
 <div class="container-fluid">
 <h1>Reserve Car</h1>
 </div>
@@ -35,8 +35,8 @@
 	$reservation_ID = uniqid();
 	$Member_ID = $_SESSION["memberID"];
 	$row = $_SESSION["fucker"];
-	$reserved_car_VIN = $_POST["search"];
-        echo "CAR RESERVED IS " . $reserved_car_VIN;
+	$reserved_car_VIN = $_POST["search"]; //$row["vin"];
+  echo "CAR RESERVED IS: " . $reserved_car_VIN; //$row["vin"];
 	$user_start_date = $_SESSION["start_date"];
 	$user_end_date = $_SESSION["end_date"];
 	$access_code = uniqid();
