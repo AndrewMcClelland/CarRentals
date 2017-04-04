@@ -15,18 +15,9 @@
 
 <?php
   include('session.php');
+  include('navbaradmin.php');
   ?>
-  <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
-  <!-- associate buton with it -->
-  <form name="logout" method="POST" action="logout.php">
-  <input value="btnLogout" type="hidden" name="Logout" >
-  <input type="submit"  value="Logout">
-  </form>
 
-  <form name="homepage" method="POST" action="goToAdminHomepage.php">
-  <input value="btnHomepage" type="hidden" name="Back" >
-  <input type="submit"  value="Back">
-  </form>
 
 <?php
 
@@ -57,16 +48,20 @@
     {
       $startMonth = date("F", strtotime($dateToStart));
       ?>
+      <div class="container-fluid" style="margin-left:20px;">
       <h3> Invoice: </h3>
+      </div>
       <?php
   		while($row = mysqli_fetch_assoc($resultVal))
       {
         $dateFormattedPaidObject = date("F d", strtotime($row["Date"]));
           ?>
+          <div class="well" style="margin-left:50px; margin-right:800px;">
           <h5><b>MemberID: </b> <?php echo $memberID ?></h5>
           <h5><b>Amount Paid: </b>$<?php echo $row["Amount"] ?></h5>
           <h5><b>Date Paid: </b><?php echo $dateFormattedPaidObject ?></h5>
           <h5><b>Description: </b><?php echo $row["Description"] ?></h5>
+          </div>
           <br></br>
         <?php
       }

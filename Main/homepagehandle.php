@@ -37,8 +37,8 @@
     $LocationIDInput = isset($_POST['location_dropdown']) ? $_POST['location_dropdown'] : false;
 	$user_start_date = date('Y-m-d', strtotime($_POST['dateFrom']));
 	$user_end_date = date('Y-m-d', strtotime($_POST['dateTo']));
-
-
+	
+	
 	if($LocationIDInput == "ALL") {
 		// Query all cars
 	$sql_all_cars_lcoation = " SELECT vin
@@ -90,14 +90,14 @@
 	// Print out all the results from the car reservations query
 	if (mysqli_num_rows($cars_reservations_result) > 0) {
 		// output data of each row
-    $_SESSION["row_info"] = "";
+                $_SESSION["row_info"] = "";
 		while($row = mysqli_fetch_assoc($cars_reservations_result)) {
 			echo "VIN: " . $row["vin"]. "<br>Make: " . $row["make"]. "<br>Model: " . $row["model"]. "<br>Year: " . $row["year"].  "<br>LocationID: " . $row["locationid"].  "<br>Colour: " . $row["colour"].  "<br>Picture Link: " . $row["picturelink"].  "<br>Rental Fee: $" . $row["rentalfee"];
 
 ?>
 
 			<form name="register_car" method="POST" action="reservationhandle.php">
-			<input value="<?php echo $row["vin"];$_SESSION["fucker"] = $row; $_SESSION["start_date"] = $user_start_date; $_SESSION["end_date"] = $user_end_date;?>" type="hidden" name="search">
+			<input value="<?php echo $row["vin"]; $_SESSION["fucker"] = $row; $_SESSION["start_date"] = $user_start_date; $_SESSION["end_date"] = $user_end_date;?>" type="hidden" name="search">
 			<input type="submit"  value="Reserve Car" class="btn btn-primary" >
 			</form>
 
