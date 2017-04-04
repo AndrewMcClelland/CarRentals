@@ -26,7 +26,7 @@
     </form>
 
 <div class="container-fluid">
-<h1>Damaged/Need Repair Cars</h1>
+<h1>Current Rentals</h1>
 </div>
 
 <?php

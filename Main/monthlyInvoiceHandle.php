@@ -57,7 +57,7 @@
     {
       $startMonth = date("F", strtotime($dateToStart));
       ?>
-      <h3> <?php echo $startMonth ?> Invoice: </h3>
+      <h3> Invoice: </h3>
       <?php
   		while($row = mysqli_fetch_assoc($resultVal))
       {

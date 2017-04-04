@@ -10,7 +10,7 @@
  	$database = "KTCS";
 
  	$cxn = mysqli_connect($host,$user,$password, $database);
-
+	$quant = mysqli_connect($host,$user,$password);
   	if (mysqli_connect_errno()) {
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		die();
@@ -18,7 +18,6 @@
 
 	echo "DROPPING TABLES...";
 	echo "<br>";
-
   	mysqli_query($cxn,"drop table Parking_Location;");
   	mysqli_query($cxn,"drop table Car;");
   	mysqli_query($cxn,"drop table Car_Rental_History;");
@@ -173,54 +172,81 @@
 	echo "* Parking_Location values inserted *<br>";
 
 	mysqli_query($cxn, "insert into Car values
-		('20140294', 'Toyota', 'Corolla', '2014', '86', 'Green', 'welovetoyota.com/2018', '30.2'),
-		('20140295', 'Porsche', 'Cayenne', '2014', '24', 'Blue', 'porsche.com/2017', '42.4'),
-		('20140296', 'Tesla', 'Model 3', '2017', '92', 'Red', 'tesla.com/model3', '20.00'),
-		('20140297', 'Subaru', 'Outback', '2018', '86', 'Silver', 'subaru.com/outback', '34.00')
-	;");
+		('20140201', 'Jeep', 'GC', '2014', '24', 'Blue', 'jeep.com/grandcherokee', '20.4'),
+		('20140202', 'Jeep', 'Compass', '2015', '24', 'Green', 'jeep.com/compass', '40.4'),
+		('20140203', 'Jeep', 'Compass', '2015', '24', 'Green', 'jeep.com/compass', '40.4'),
+		('20140204', 'Jeep', 'Wrangler', '2016', '24', 'White', 'jeep.com/wrangler', '60.4'),
+		('20140205', 'Jeep', 'Patriot', '2017', '24', 'Yellow', 'jeep.com/patriot', '80.4'),
+		('20140206', 'Jeep', 'CJ', '2014', '24', 'Black', 'jeep.com/cj', '90.4'),
+		('20140207', 'Audi', 'A3', '2017', '92', 'Red', 'audi.com/a3', '200.00'),
+		('20140208', 'Audi', 'A4', '2017', '92', 'Green', 'audi.com/a4', '300.00'),
+		('20140209', 'Audi', 'A5', '2017', '92', 'Gold', 'audi.com/a5', '400.00'),
+		('20140210', 'Audi', 'Q5', '2017', '92', 'White', 'audi.com/q5', '500.00'),
+		('20140211', 'Audi', 'Q7', '2017', '92', 'Blue', 'audi.com/q7', '600.00'),
+		('20140212', 'Subaru', 'Outback', '2018', '86', 'Silver', 'subaru.com/outback', '48.00'),
+		('20140213', 'Subaru', 'Crosstrek', '2018', '86', 'Gold', 'subaru.com/crosstrek', '62.00'),
+		('20140214', 'Subaru', 'WRX', '2014', '86', 'Green', 'subaru.com/wrx', '86.2'),
+		('20140215', 'Subaru', 'Legacy', '2014', '86', 'White', 'subaru.com/legacy', '92.2'),
+		('20140216', 'Subaru', 'Forester', '2014', '86', 'Black', 'subaru.com/forester', '100.2')
+		;");
 	echo "* Car values inserted *<br>";
 
   mysqli_query($cxn, "insert into Car_Rental_History values
-      ('20140294', '20', '124234', '3211231', 'normal', 'normal', '2017-03-16 10:00:00', '2017-03-29 18:00:00'),
-      ('20140295', '24', '234134', '3211231', 'normal', 'damaged', '2017-03-12 10:00:00', '2017-03-29 16:00:00'),
-      ('20140296', '32', '12321', '20000', 'normal', 'not running', '2017-02-12 10:00:00', '2017-02-15 18:00:00')
+      ('20140212', '20', '124234', '3211231', 'normal', 'normal', '2017-03-16 10:00:00', '2017-03-29 18:00:00'),
+			('20140212', '24', '1002', '2001', 'normal', 'damaged', '2012-03-16 10:00:00', '2012-03-30 18:00:00'),
+			('20140212', '32', '213', '3213', 'normal', 'not running', '2013-04-01 10:00:00', '2013-04-10 18:00:00'),
+			('20140213', '20', '4432', '4500', 'normal', 'normal', '2016-03-16 10:00:00', '2016-03-29 18:00:00'),
+			('20140213', '24', '400', '800', 'normal', 'normal', '2015-03-16 10:00:00', '2015-03-30 18:00:00'),
+			('20140213', '32', '423', '4234', 'normal', 'not running', '2010-04-01 10:00:00', '2010-04-10 18:00:00'),
+			('20140214', '20', '4234', '42343', 'normal', 'not running', '2017-05-16 10:00:00', '2017-05-29 18:00:00'),
+			('20140214', '24', '42342', '323133', 'normal', 'normal', '2012-04-16 10:00:00', '2012-04-30 18:00:00'),
+			('20140214', '32', '100', '150', 'normal', 'not running', '2013-02-01 10:00:00', '2013-02-10 18:00:00'),
+			('20140215', '20', '200', '300', 'normal', 'normal', '2016-03-16 10:00:00', '2016-03-29 18:00:00'),
+			('20140215', '24', '400', '500', 'normal', 'normal', '2012-08-16 10:00:00', '2012-08-30 18:00:00'),
+			('20140215', '32', '32332', '323232', 'normal', 'normal', '2013-11-01 10:00:00', '2013-11-10 18:00:00'),
+			('20140216', '20', '800', '1000', 'normal', 'normal', '2017-03-16 10:00:00', '2017-03-29 18:00:00'),
+			('20140216', '24', '2500', '3000', 'normal', 'damaged', '2012-03-16 10:00:00', '2012-03-30 18:00:00'),
+			('20140216', '32', '4000', '8000', 'normal', 'not running', '2013-04-01 10:00:00', '2013-04-10 18:00:00')
       ;");
       echo "* Car_Rental_History values inserted *<br>";
 
 	mysqli_query($cxn, "insert into Car_Maintenance_History values
-		('20140294', '1998-07-04', '84000', 'Scheduled', 'Scheduled mainenance for oil check.'),
-		('20140294', '1998-07-04', '95000', 'Scheduled', 'Scheduled mainenance for oil check.'),
-		('20140295', '2014-02-18', '68000', 'Repair', 'Repair the front bumper.'),
-		('20140296', '2012-12-20', '9000', 'Body Work', 'Putting on cool racing stripes.')
+		('20140212', '2012-05-30', '2002', 'Repair', 'Fixed up the problem.'),
+		('20140213', '2015-04-01', '4235', 'Repair', 'Fixed up the transmission.'),
+		('20140214', '2016-02-18', '151', 'Repair', 'Repair the front bumper.'),
+		('20140216', '2012-05-20', '3001', 'Body Work', 'Putting on cool racing stripes.')
 	;");
 	echo "* Car_Maintenance_History values inserted *<br>";
 
 	mysqli_query($cxn, "insert into Rental_Comment values
-		('20140294', '20', '1', 'Terrible car goes way to fast', '2015-01-02', NULL, NULL),
-		('20140295', '24', '1', 'Terrible car goes way to slow', '2014-05-28', 'You should change gears then...', '2015-02-03'),
-		('20140296', '32', '4', 'Great car goes way to fast', '2016-05-03', NULL, NULL)
+		('20140212', '20', '1', 'Terrible car goes way to fast', '2015-01-02', NULL, NULL),
+		('20140213', '24', '1', 'Terrible car goes way to slow', '2014-05-28', 'You should change gears then...', '2015-02-03'),
+		('20140214', '32', '4', 'Great car goes way to fast', '2016-05-03', NULL, NULL)
 	;");
 	echo "* Rental_Comment values inserted *<br>";
 
 	mysqli_query($cxn, "insert into KTCS_Member values
 		('20', 'Andrew', 'Hello', '10 Hello Lane', 'K7L1V2', 'Ontario', 'Kingston', 'Canada', '6471111111', 'hello@hello.com', 'B2746-1026-336-3048', '30', 'ilikedogs', '5301063177596486'),
 		('24', 'Ryan', 'Freddy', '10 Goodbye Lane', 'K7L8F3', 'Ontario', 'Kingston', 'Canada', '6472345678', 'bye@bye.com', 'C9384-1026-232-3048', '30', 'ilikecats', '5231094377093486'),
-		('32', 'Rony', 'Bes', '10 Database Lane', 'K7H8Z3', 'Ontario', 'Toronto', 'Canada', '6478439900', 'dbms@dbms.com', 'F9020-3231-333-9809', '30', 'ilikebirds', '5237483277093486'),
-    (33, 'Test', 'User', '1 Test Lane', 'K6AB26', 'Ontario', 'Toronto', 'Canada', '6471111234', 'testuser@gmail.com', 'D24185019184726', '30.00', '$2y$10$.D2kjEoSRf0phSKUsv.N6O5bhbXPHl6lZuTgQluwfgkc82/L34BEq', '2719308161782')
+		('33', 'Rony', 'Bes', '10 Database Lane', 'K7H8Z3', 'Ontario', 'Toronto', 'Canada', '6478439900', 'dbms@dbms.com', 'F9020-3231-333-9809', '30', 'ilikebirds', '5237483277093486'),
+    (32, 'Test', 'User', '1 Test Lane', 'K6AB26', 'Ontario', 'Toronto', 'Canada', '6471111234', 'testuser@gmail.com', 'D24185019184726', '30.00', '$2y$10$.D2kjEoSRf0phSKUsv.N6O5bhbXPHl6lZuTgQluwfgkc82/L34BEq', '2719308161782')
 	;");
 	echo "* KTCS_Member values inserted *<br>";
 
 	mysqli_query($cxn, "insert into Reservations values
-		('26', '20', '20140294', '1998-07-04', '2000-12-08', '7897823'),
-		('82', '24', '20140295', '2014-02-18', '2016-04-02', '424342'),
-		('44', '32', '20140296', '2012-12-20', '2012-12-22', '7897823')
+		('26', '20', '20140212', '2018-07-04', '2019-12-08', '7897823'),
+		('82', '24', '20140213', '2018-02-18', '2019-04-02', '424342'),
+		('44', '32', '20140214', '2018-12-20', '2019-12-22', '7897823')
 	;");
 	echo "* Reservation values inserted *<br>";
 
 	mysqli_query($cxn, "insert into Payment_History values
 		('20', '344.10', '2014-06-07', 'You rented the Tesla Model 3.'),
-		('24', '30.00', '2012-01-31', 'Youre monthly payment fee.'),
-		('32', '1000.00', '1996-04-07', 'You rented the Bugatti Veyron.')
+		('24', '30.00', '2012-01-01', 'Youre monthly payment fee.'),
+		('32', '30.00', '2017-02-01', 'Youre monthly payment fee.'),
+		('32', '30.00', '2017-03-01', 'Youre monthly payment fee.'),
+		('32', '30.00', '2017-04-01', 'Youre monthly payment fee.'),
+		('32', '1000.00', '2017-02-04', 'You rented the Bugatti Veyron.')
 	;");
 	echo "* Payment_History values inserted *<br>";
 
