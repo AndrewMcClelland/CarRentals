@@ -12,12 +12,23 @@
 
   <?php
     include('session.php');
-    include('navbaradmin.php');
     ?>
-<div class="container-fluid" style="margin-left:20px;">
+    <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
+    <!-- associate buton with it -->
+    <form name="logout" method="POST" action="logout.php">
+    <input value="btnLogout" type="hidden" name="Logout" >
+    <input type="submit"  value="Logout">
+    </form>
+
+    <form name="homepage" method="POST" action="goToAdminHomepage.php">
+    <input value="btnHomepage" type="hidden" name="Back" >
+    <input type="submit"  value="Back">
+    </form>
+
+<div class="container-fluid">
 <h1>Reply to Comment</h1>
 </div>
-<div class="well" style="margin-left:50px; margin-right:800px;">
+
 <?php
 
     $host = "localhost";
@@ -38,6 +49,7 @@
   ?>
 
   <h5><b>Orig Comment: </b> <?php echo $origComment ?></h5>
+  </div>
 
   <form action="insertReplyComment.php" method="post">
 
@@ -46,7 +58,5 @@
   <input type="text" class="form-control" placeholder="Reply to users comment" name="replyCommentVal" id="replyComment" >
   </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-default">Submit</button>
   </form>
-</div>
-</body>

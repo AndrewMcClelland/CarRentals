@@ -34,6 +34,7 @@
 
 
     $memberID = $_SESSION["memberID"];
+    echo "MEMBER ID IS: " .$memberID;
     $VIN = $_SESSION["currentVIN"];
     $curOdo = $_POST["curOdoReading"];
     $curStatus = $_POST["carStatus"];
@@ -79,7 +80,7 @@
     {
       // Create the pickup object
       mysqli_query($cxn, "insert into Car_Rental_History values
-                 ('$VIN', '33', '$curOdo', 'NULL', '$curStatus', 'NULL', '$currentDate', 'NULL')
+                 ('$VIN', $memberID, '$curOdo', 'NULL', '$curStatus', 'NULL', '$currentDate', 'NULL')
                  ;");
     ?>
     <h4> Keys are now dispensing </h4>

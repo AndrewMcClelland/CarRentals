@@ -32,7 +32,7 @@
 	<br/><br/>
 
 	<label for="LocationID">Location ID:</label>
-	<SELECT class="form-control" id="dopdownMember" NAME = "location_dropdown">
+	<SELECT NAME = "location_dropdown">
     <option value="">Please select location...</option>
 
 	<?php

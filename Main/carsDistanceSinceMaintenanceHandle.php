@@ -12,14 +12,24 @@
 
   <?php
     include('session.php');
-    include('navbaradmin.php');
     ?>
+    <h4> Hi Admin <?php echo $_SESSION["adminEmail"] ?></h4>
+    <!-- associate buton with it -->
+    <form name="logout" method="POST" action="logout.php">
+    <input value="btnLogout" type="hidden" name="Logout" >
+    <input type="submit"  value="Logout">
+    </form>
 
-<div class="container-fluid" style="margin-left:20px;">
+    <form name="homepage" method="POST" action="goToAdminHomepage.php">
+    <input value="btnHomepage" type="hidden" name="Back" >
+    <input type="submit"  value="Back">
+    </form>
+
+<div class="container-fluid">
 <h1>Car Rental History</h1>
 </div>
 
-<div class="well" style="margin-left:50px; margin-right:800px;">
+
 <?php
 
     $host = "localhost";
@@ -75,6 +85,8 @@
 	*/
 
 	?>
+
+	<br/><hr><br/>
 
 	<?php
 	// Loop through all Car_Rental_History results and compare VINs to see how far travelled since maintenance
@@ -153,6 +165,6 @@
 
 	mysqli_close($cxn);
     ?>
-</div>
+
 </body>
 </html>
