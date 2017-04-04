@@ -44,9 +44,9 @@
     }
 
 	// Return VIN of cars that were damaged or not running and haven't been maintenanced since
-	$sql_damageRepair_cars = "	SELECT VIN
+	$sql_damageRepair_cars = "SELECT VIN
 												FROM Car_Rental_History JOIN Car_Maintenance_History USING(VIN)
-												WHERE Car_Rental_History.Status IN ('damaged', 'not running') AND Car_Rental_History.Date > Car_Maintenance_History.Date";
+												WHERE Car_Rental_History.DropoffStatus IN ('damaged', 'not running') AND Car_Rental_History.DropoffDate > Car_Maintenance_History.Date";
 
 	$sql_car_info = "	SELECT vin, make, model, year, locationid, colour, picturelink, rentalfee
 								FROM car
